@@ -66,7 +66,6 @@ Then create a branch and make your changes on it. Once you are done with your ch
 a pull request on Github.
 
 
-
 ## License
 
 Copyright © 2012 Michael S. Klishin, Alex Petrov
