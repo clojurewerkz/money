@@ -80,7 +80,12 @@
        "EUR +21.13"  (of-minor CurrencyUnit/EUR 2113)
        "JPY +323"    (of-minor CurrencyUnit/JPY 323)
        "JPY +323.00" (of-minor CurrencyUnit/JPY 323)
-       "GBP +33.78"  (of-minor CurrencyUnit/GBP 3378)))
+       "GBP +33.78"  (of-minor CurrencyUnit/GBP 3378)
+       "USD -20.05"  (of-minor CurrencyUnit/USD -2005)
+       "EUR -21.13"  (of-minor CurrencyUnit/EUR -2113)
+       "JPY -323"    (of-minor CurrencyUnit/JPY -323)
+       "JPY -323.00" (of-minor CurrencyUnit/JPY -323)
+       "GBP -33.78"  (of-minor CurrencyUnit/GBP -3378)))
 
 (deftest test-addition-of-two-monetary-values
   (let [cu CurrencyUnit/EUR
