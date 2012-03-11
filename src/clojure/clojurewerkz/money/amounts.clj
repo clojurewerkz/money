@@ -28,3 +28,7 @@
 (defn total
   [monies]
   (Money/total monies))
+
+(defn parse
+  [^String s]
+  (Money/parse s))

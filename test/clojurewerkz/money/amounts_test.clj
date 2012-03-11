@@ -51,6 +51,32 @@
         b  (of-major  cu 10)
         c  (of-minor  cu 1300)
         d  (zero      cu)
-        t  (total [a b c d])]
+        ^Money t  (total [a b c d])]
     (is (= (.getCurrencyUnit t) cu))
     (is (= 38.00M (.getAmount t)))))
+
+
+(deftest test-parsing-of-monetary-amounts
+  (are [s money] (is (= (parse s) money))
+       "USD 0" (zero CurrencyUnit/USD)
+       "EUR 0" (zero CurrencyUnit/EUR)
+       "JPY 0" (zero CurrencyUnit/JPY)
+       "GBP 0" (zero CurrencyUnit/GBP)
+       "USD 10" (of-major CurrencyUnit/USD 10)
+       "EUR 11" (of-major CurrencyUnit/EUR 11)
+       "JPY 12" (of-major CurrencyUnit/JPY 12)
+       "GBP 13" (of-major CurrencyUnit/GBP 13)
+       "USD +10" (of-major CurrencyUnit/USD 10)
+       "EUR +11" (of-major CurrencyUnit/EUR 11)
+       "JPY +12" (of-major CurrencyUnit/JPY 12)
+       "GBP +13" (of-major CurrencyUnit/GBP 13)
+       "USD 20.05"  (of-minor CurrencyUnit/USD 2005)
+       "EUR 21.13"  (of-minor CurrencyUnit/EUR 2113)
+       "JPY 323"    (of-minor CurrencyUnit/JPY 323)
+       "JPY 323.00" (of-minor CurrencyUnit/JPY 323)
+       "GBP 33.78"  (of-minor CurrencyUnit/GBP 3378)
+       "USD +20.05"  (of-minor CurrencyUnit/USD 2005)
+       "EUR +21.13"  (of-minor CurrencyUnit/EUR 2113)
+       "JPY +323"    (of-minor CurrencyUnit/JPY 323)
+       "JPY +323.00" (of-minor CurrencyUnit/JPY 323)
+       "GBP +33.78"  (of-minor CurrencyUnit/GBP 3378)))
