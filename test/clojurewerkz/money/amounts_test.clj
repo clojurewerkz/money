@@ -1,6 +1,6 @@
 (ns clojurewerkz.money.amounts-test
   (:use clojure.test
-        clojurewerkz.money.amounts)
+        [clojurewerkz.money.amounts :exclude [zero?] :as amounts])
   (:import [org.joda.money CurrencyUnit Money]
            [java.math RoundingMode]))
 
@@ -40,7 +40,8 @@
 (deftest test-zero-amount
   (are [cu bdec] (let [^Money money (zero cu)]
                           (is (= (.getCurrencyUnit money) cu))
-                          (is (= bdec (.getAmount money))))
+                          (is (= bdec (.getAmount money)))
+                          (is (amounts/zero? money)))
        CurrencyUnit/USD 0.00M
        CurrencyUnit/GBP 0.00M
        CurrencyUnit/JPY 0M))
@@ -80,3 +81,81 @@
        "JPY +323"    (of-minor CurrencyUnit/JPY 323)
        "JPY +323.00" (of-minor CurrencyUnit/JPY 323)
        "GBP +33.78"  (of-minor CurrencyUnit/GBP 3378)))
+
+(deftest test-addition-of-two-monetary-values
+  (let [cu CurrencyUnit/EUR
+        a  (amount-of cu 15.00)
+        b  10.00M
+        c  (of-minor  cu 1300)
+        d  0.00M
+        ^Money t1  (amounts/plus a b)
+        ^Money t2  (amounts/plus c d)]
+    (is (= (.getCurrencyUnit t1) cu))
+    (is (= (.getCurrencyUnit t2) cu))
+    (is (= 25.00M (.getAmount t1)))
+    (is (= 13.00M (.getAmount t2)))))
+
+(deftest test-addition-with-major-units
+  (let [cu CurrencyUnit/EUR
+        a  (amount-of cu 15.00)
+        b  10
+        c  (of-minor  cu 1300)
+        d  0
+        ^Money t1  (amounts/plus-major a b)
+        ^Money t2  (amounts/plus-major c d)]
+    (is (= (.getCurrencyUnit t1) cu))
+    (is (= (.getCurrencyUnit t2) cu))
+    (is (= 25.00M (.getAmount t1)))
+    (is (= 13.00M (.getAmount t2)))))
+
+(deftest test-addition-with-minor-units
+  (let [cu CurrencyUnit/EUR
+        a  (amount-of cu 15.00)
+        b  1000
+        c  (of-minor  cu 1300)
+        d  0
+        ^Money t1  (amounts/plus-minor a b)
+        ^Money t2  (amounts/plus-minor c d)]
+    (is (= (.getCurrencyUnit t1) cu))
+    (is (= (.getCurrencyUnit t2) cu))
+    (is (= 25.00M (.getAmount t1)))
+    (is (= 13.00M (.getAmount t2)))))
+
+(deftest test-substraction-of-two-monetary-values
+  (let [cu CurrencyUnit/EUR
+        a  (amount-of cu 15.00)
+        b  10.00M
+        c  (of-minor  cu 1300)
+        d  0.00M
+        ^Money t1  (amounts/minus a b)
+        ^Money t2  (amounts/minus c d)]
+    (is (= (.getCurrencyUnit t1) cu))
+    (is (= (.getCurrencyUnit t2) cu))
+    (is (= 5.00M  (.getAmount t1)))
+    (is (= 13.00M (.getAmount t2)))))
+
+(deftest test-substraction-with-major-units
+  (let [cu CurrencyUnit/EUR
+        a  (amount-of cu 15.00)
+        b  10
+        c  (of-minor  cu 1300)
+        d  0
+        ^Money t1  (amounts/minus-major a b)
+        ^Money t2  (amounts/minus-major c d)]
+    (is (= (.getCurrencyUnit t1) cu))
+    (is (= (.getCurrencyUnit t2) cu))
+    (is (= 5.00M  (.getAmount t1)))
+    (is (= 13.00M (.getAmount t2)))))
+
+(deftest test-substraction-with-minor-units
+  (let [cu CurrencyUnit/EUR
+        a  (amount-of cu 15.00)
+        b  1000
+        c  (of-minor  cu 1300)
+        d  0
+        ^Money t1  (amounts/minus-minor a b)
+        ^Money t2  (amounts/minus-minor c d)]
+    (is (= (.getCurrencyUnit t1) cu))
+    (is (= (.getCurrencyUnit t2) cu))
+    (is (= 5.00M  (.getAmount t1)))
+    (is (= 13.00M (.getAmount t2)))))
