@@ -62,3 +62,12 @@
 (defn parse
   [^String s]
   (Money/parse s))
+
+
+(defn negated
+  [^Money money]
+  (.negated money))
+
+(defn abs
+  [^Money money]
+  (.abs money))

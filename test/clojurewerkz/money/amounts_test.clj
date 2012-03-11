@@ -39,9 +39,9 @@
 
 (deftest test-zero-amount
   (are [cu bdec] (let [^Money money (zero cu)]
-                          (is (= (.getCurrencyUnit money) cu))
-                          (is (= bdec (.getAmount money)))
-                          (is (amounts/zero? money)))
+                   (is (= (.getCurrencyUnit money) cu))
+                   (is (= bdec (.getAmount money)))
+                   (is (amounts/zero? money)))
        CurrencyUnit/USD 0.00M
        CurrencyUnit/GBP 0.00M
        CurrencyUnit/JPY 0M))
@@ -164,3 +164,20 @@
     (is (= (.getCurrencyUnit t2) cu))
     (is (= 5.00M  (.getAmount t1)))
     (is (= 13.00M (.getAmount t2)))))
+
+
+(deftest test-negation
+  (let [cu           CurrencyUnit/USD
+        ^Money money (negated (amount-of cu 10.00M))]
+    (is (= cu (.getCurrencyUnit money)))
+    (is (= -10.00M (.getAmount money)))))
+
+
+(deftest test-taking-an-absolute-value
+  (let [cu            CurrencyUnit/USD
+        ^Money money1 (amount-of cu 10.00M)
+        ^Money money2 (negated money1)]
+    (is (= cu (.getCurrencyUnit money1)))
+    (is (= cu (.getCurrencyUnit money2)))
+    (is (= 10.00M (.getAmount ^Money (amounts/abs money1))))
+    (is (= 10.00M (.getAmount ^Money (amounts/abs money2))))))
