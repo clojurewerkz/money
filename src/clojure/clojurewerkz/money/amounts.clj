@@ -8,6 +8,15 @@
 
 (defn amount-of
   ([^CurrencyUnit unit ^double amount]
-          (Money/of unit amount))
+     (Money/of unit amount))
   ([^CurrencyUnit unit ^double amount ^RoundingMode rm]
-          (Money/of unit amount rm)))
+     (Money/of unit amount rm)))
+
+(defn of-major
+  [^CurrencyUnit unit ^long amount]
+  (Money/ofMajor unit amount))
+
+
+(defn of-minor
+  [^CurrencyUnit unit ^long amount]
+  (Money/ofMinor unit amount))
