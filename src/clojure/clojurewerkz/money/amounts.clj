@@ -24,3 +24,7 @@
 (defn zero
   [^CurrencyUnit unit]
   (Money/zero unit))
+
+(defn total
+  [monies]
+  (Money/total monies))

@@ -44,3 +44,13 @@
        CurrencyUnit/USD 0.00M
        CurrencyUnit/GBP 0.00M
        CurrencyUnit/JPY 0M))
+
+(deftest test-money-total
+  (let [cu CurrencyUnit/EUR
+        a  (amount-of cu 15.00)
+        b  (of-major  cu 10)
+        c  (of-minor  cu 1300)
+        d  (zero      cu)
+        t  (total [a b c d])]
+    (is (= (.getCurrencyUnit t) cu))
+    (is (= 38.00M (.getAmount t)))))
