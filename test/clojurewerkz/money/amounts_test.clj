@@ -35,3 +35,12 @@
        CurrencyUnit/USD 2595 25.95M
        CurrencyUnit/GBP 4012 40.12M
        CurrencyUnit/JPY 5000 5000M))
+
+
+(deftest test-zero-amount
+  (are [cu bdec] (let [^Money money (zero cu)]
+                          (is (= (.getCurrencyUnit money) cu))
+                          (is (= bdec (.getAmount money))))
+       CurrencyUnit/USD 0.00M
+       CurrencyUnit/GBP 0.00M
+       CurrencyUnit/JPY 0M))

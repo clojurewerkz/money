@@ -20,3 +20,7 @@
 (defn of-minor
   [^CurrencyUnit unit ^long amount]
   (Money/ofMinor unit amount))
+
+(defn zero
+  [^CurrencyUnit unit]
+  (Money/zero unit))
