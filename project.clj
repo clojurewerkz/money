@@ -6,7 +6,7 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.3.0"]
                  [org.joda/joda-money "0.6"]]
-  :profiles {:1.4 {:dependencies [[org.clojure/clojure "1.4.0-beta5"]]}}
+  :profiles {:1.4 {:dependencies [[org.clojure/clojure "1.4.0"]]}}
   :aliases { "all" ["with-profile" "dev:dev,1.4"] }
   :source-paths      ["src/clojure"]
   :java-source-paths ["src/java"]
