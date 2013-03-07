@@ -32,7 +32,7 @@ If you are comfortable with using snapshots, snapshot artifacts are [released to
 
 With Leiningen:
 
-    [clojurewerkz/money "1.0.0-SNAPSHOT"]
+    [clojurewerkz/money "1.0.0-beta1"]
 
 
 With Maven:
@@ -40,7 +40,7 @@ With Maven:
     <dependency>
       <groupId>clojurewerkz</groupId>
       <artifactId>money</artifactId>
-      <version>1.0.0-SNAPSHOT</version>
+      <version>1.0.0-beta1</version>
     </dependency>
 
 
@@ -69,6 +69,6 @@ a pull request on Github.
 
 ## License
 
-Copyright © 2012 Michael S. Klishin, Alex Petrov
+Copyright © 2012-2013 Michael S. Klishin, Alex Petrov
 
 Distributed under the Eclipse Public License, the same as Clojure.
