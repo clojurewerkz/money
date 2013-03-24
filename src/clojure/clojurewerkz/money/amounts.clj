@@ -1,4 +1,5 @@
 (ns clojurewerkz.money.amounts
+  "Operations on monetary amounts, including predicates and parsing"
   (:refer-clojure :exclude [zero?])
   (:import [org.joda.money Money BigMoney CurrencyUnit]
            [java.math RoundingMode]))
@@ -29,6 +30,22 @@
 (defn zero?
   [^Money money]
   (.isZero money))
+
+(defn positive?
+  [^Money money]
+  (.isPositive money))
+
+(defn negative?
+  [^Money money]
+  (.isNegative money))
+
+(defn positive-or-zero?
+  [^Money money]
+  (.isPositiveOrZero money))
+
+(defn negative-or-zero?
+  [^Money money]
+  (.isNegativeOrZero money))
 
 (defn total
   [^Iterable monies]

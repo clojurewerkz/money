@@ -1,26 +1,26 @@
 (ns clojurewerkz.money.amounts-test
-  (:use clojure.test
-        [clojurewerkz.money.amounts :exclude [zero?] :as amounts])
+  (:require [clojurewerkz.money.amounts :as ams])
+  (:use clojure.test)
   (:import [org.joda.money CurrencyUnit Money]
-           [java.math RoundingMode]))
+           java.math.RoundingMode))
 
 
 (println (str "Using Clojure version " *clojure-version*))
 
 (deftest test-amount-of-with-currency-unit-and-double
-  (let [^Money money (amount-of CurrencyUnit/EUR 10.00)]
+  (let [^Money money (ams/amount-of CurrencyUnit/EUR 10.00)]
     (is (= (.getCurrencyUnit money) CurrencyUnit/EUR))
     (is (= 10.00M (.getAmount money)))))
 
 (deftest test-amount-of-with-currency-unit-and-double-and-rounding-mode
-  (let [^Money money (amount-of CurrencyUnit/EUR 10.0333333 RoundingMode/DOWN)]
+  (let [^Money money (ams/amount-of CurrencyUnit/EUR 10.0333333 RoundingMode/DOWN)]
     (is (= (.getCurrencyUnit money) CurrencyUnit/EUR))
     (is (= 10.03M (.getAmount money)))))
 
 
 
 (deftest test-amount-of-with-currency-unit-and-amount-in-major-units
-  (are [cu amount bdec] (let [^Money money (of-major cu amount)]
+  (are [cu amount bdec] (let [^Money money (ams/of-major cu amount)]
                           (is (= (.getCurrencyUnit money) cu))
                           (is (= bdec (.getAmount money))))
        CurrencyUnit/USD 30 30.00M
@@ -29,7 +29,7 @@
 
 
 (deftest test-amount-of-with-currency-unit-and-amount-in-minor-units
-  (are [cu amount bdec] (let [^Money money (of-minor cu amount)]
+  (are [cu amount bdec] (let [^Money money (ams/of-minor cu amount)]
                           (is (= (.getCurrencyUnit money) cu))
                           (is (= bdec (.getAmount money))))
        CurrencyUnit/USD 2595 25.95M
@@ -38,63 +38,94 @@
 
 
 (deftest test-zero-amount
-  (are [cu bdec] (let [^Money money (zero cu)]
+  (are [cu bdec] (let [^Money money (ams/zero cu)]
                    (is (= (.getCurrencyUnit money) cu))
                    (is (= bdec (.getAmount money)))
-                   (is (amounts/zero? money)))
+                   (is (ams/zero? money))
+                   (is (not (ams/positive? money))))
        CurrencyUnit/USD 0.00M
        CurrencyUnit/GBP 0.00M
        CurrencyUnit/JPY 0M))
 
+(deftest test-positive?
+  (are [cu bdec] (let [^Money money (ams/of-minor cu bdec)]
+                   (is (ams/positive? money)))
+       CurrencyUnit/USD 100
+       CurrencyUnit/GBP 200
+       CurrencyUnit/JPY 500))
+
+(deftest test-positive-or-zero?
+  (are [cu bdec] (let [^Money money (ams/of-minor cu bdec)]
+                   (is (ams/positive-or-zero? money)))
+       CurrencyUnit/USD 100
+       CurrencyUnit/GBP 200
+       CurrencyUnit/JPY 500
+       CurrencyUnit/EUR 0))
+
+(deftest test-negative?
+  (are [cu bdec] (let [^Money money (ams/of-minor cu bdec)]
+                   (is (ams/negative? money)))
+       CurrencyUnit/USD -100
+       CurrencyUnit/GBP -200
+       CurrencyUnit/JPY -500))
+
+(deftest test-negative-or-zero?
+  (are [cu bdec] (let [^Money money (ams/of-minor cu bdec)]
+                   (is (ams/negative-or-zero? money)))
+       CurrencyUnit/USD -100
+       CurrencyUnit/GBP -200
+       CurrencyUnit/JPY -500
+       CurrencyUnit/EUR 0))
+
 (deftest test-money-total
   (let [cu CurrencyUnit/EUR
-        a  (amount-of cu 15.00)
-        b  (of-major  cu 10)
-        c  (of-minor  cu 1300)
-        d  (zero      cu)
-        ^Money t  (total [a b c d])]
+        a  (ams/amount-of cu 15.00)
+        b  (ams/of-major  cu 10)
+        c  (ams/of-minor  cu 1300)
+        d  (ams/zero      cu)
+        ^Money t  (ams/total [a b c d])]
     (is (= (.getCurrencyUnit t) cu))
     (is (= 38.00M (.getAmount t)))))
 
 
 (deftest test-parsing-of-monetary-amounts
-  (are [s money] (is (= (parse s) money))
-       "USD 0" (zero CurrencyUnit/USD)
-       "EUR 0" (zero CurrencyUnit/EUR)
-       "JPY 0" (zero CurrencyUnit/JPY)
-       "GBP 0" (zero CurrencyUnit/GBP)
-       "USD 10" (of-major CurrencyUnit/USD 10)
-       "EUR 11" (of-major CurrencyUnit/EUR 11)
-       "JPY 12" (of-major CurrencyUnit/JPY 12)
-       "GBP 13" (of-major CurrencyUnit/GBP 13)
-       "USD +10" (of-major CurrencyUnit/USD 10)
-       "EUR +11" (of-major CurrencyUnit/EUR 11)
-       "JPY +12" (of-major CurrencyUnit/JPY 12)
-       "GBP +13" (of-major CurrencyUnit/GBP 13)
-       "USD 20.05"  (of-minor CurrencyUnit/USD 2005)
-       "EUR 21.13"  (of-minor CurrencyUnit/EUR 2113)
-       "JPY 323"    (of-minor CurrencyUnit/JPY 323)
-       "JPY 323.00" (of-minor CurrencyUnit/JPY 323)
-       "GBP 33.78"  (of-minor CurrencyUnit/GBP 3378)
-       "USD +20.05"  (of-minor CurrencyUnit/USD 2005)
-       "EUR +21.13"  (of-minor CurrencyUnit/EUR 2113)
-       "JPY +323"    (of-minor CurrencyUnit/JPY 323)
-       "JPY +323.00" (of-minor CurrencyUnit/JPY 323)
-       "GBP +33.78"  (of-minor CurrencyUnit/GBP 3378)
-       "USD -20.05"  (of-minor CurrencyUnit/USD -2005)
-       "EUR -21.13"  (of-minor CurrencyUnit/EUR -2113)
-       "JPY -323"    (of-minor CurrencyUnit/JPY -323)
-       "JPY -323.00" (of-minor CurrencyUnit/JPY -323)
-       "GBP -33.78"  (of-minor CurrencyUnit/GBP -3378)))
+  (are [s money] (is (= (ams/parse s) money))
+       "USD 0" (ams/zero CurrencyUnit/USD)
+       "EUR 0" (ams/zero CurrencyUnit/EUR)
+       "JPY 0" (ams/zero CurrencyUnit/JPY)
+       "GBP 0" (ams/zero CurrencyUnit/GBP)
+       "USD 10" (ams/of-major CurrencyUnit/USD 10)
+       "EUR 11" (ams/of-major CurrencyUnit/EUR 11)
+       "JPY 12" (ams/of-major CurrencyUnit/JPY 12)
+       "GBP 13" (ams/of-major CurrencyUnit/GBP 13)
+       "USD +10" (ams/of-major CurrencyUnit/USD 10)
+       "EUR +11" (ams/of-major CurrencyUnit/EUR 11)
+       "JPY +12" (ams/of-major CurrencyUnit/JPY 12)
+       "GBP +13" (ams/of-major CurrencyUnit/GBP 13)
+       "USD 20.05"  (ams/of-minor CurrencyUnit/USD 2005)
+       "EUR 21.13"  (ams/of-minor CurrencyUnit/EUR 2113)
+       "JPY 323"    (ams/of-minor CurrencyUnit/JPY 323)
+       "JPY 323.00" (ams/of-minor CurrencyUnit/JPY 323)
+       "GBP 33.78"  (ams/of-minor CurrencyUnit/GBP 3378)
+       "USD +20.05"  (ams/of-minor CurrencyUnit/USD 2005)
+       "EUR +21.13"  (ams/of-minor CurrencyUnit/EUR 2113)
+       "JPY +323"    (ams/of-minor CurrencyUnit/JPY 323)
+       "JPY +323.00" (ams/of-minor CurrencyUnit/JPY 323)
+       "GBP +33.78"  (ams/of-minor CurrencyUnit/GBP 3378)
+       "USD -20.05"  (ams/of-minor CurrencyUnit/USD -2005)
+       "EUR -21.13"  (ams/of-minor CurrencyUnit/EUR -2113)
+       "JPY -323"    (ams/of-minor CurrencyUnit/JPY -323)
+       "JPY -323.00" (ams/of-minor CurrencyUnit/JPY -323)
+       "GBP -33.78"  (ams/of-minor CurrencyUnit/GBP -3378)))
 
 (deftest test-addition-of-two-monetary-values
   (let [cu CurrencyUnit/EUR
-        a  (amount-of cu 15.00)
+        a  (ams/amount-of cu 15.00)
         b  10.00M
-        c  (of-minor  cu 1300)
+        c  (ams/of-minor  cu 1300)
         d  0.00M
-        ^Money t1  (amounts/plus a b)
-        ^Money t2  (amounts/plus c d)]
+        ^Money t1  (ams/plus a b)
+        ^Money t2  (ams/plus c d)]
     (is (= (.getCurrencyUnit t1) cu))
     (is (= (.getCurrencyUnit t2) cu))
     (is (= 25.00M (.getAmount t1)))
@@ -102,12 +133,12 @@
 
 (deftest test-addition-with-major-units
   (let [cu CurrencyUnit/EUR
-        a  (amount-of cu 15.00)
+        a  (ams/amount-of cu 15.00)
         b  10
-        c  (of-minor  cu 1300)
+        c  (ams/of-minor  cu 1300)
         d  0
-        ^Money t1  (amounts/plus-major a b)
-        ^Money t2  (amounts/plus-major c d)]
+        ^Money t1  (ams/plus-major a b)
+        ^Money t2  (ams/plus-major c d)]
     (is (= (.getCurrencyUnit t1) cu))
     (is (= (.getCurrencyUnit t2) cu))
     (is (= 25.00M (.getAmount t1)))
@@ -115,12 +146,12 @@
 
 (deftest test-addition-with-minor-units
   (let [cu CurrencyUnit/EUR
-        a  (amount-of cu 15.00)
+        a  (ams/amount-of cu 15.00)
         b  1000
-        c  (of-minor  cu 1300)
+        c  (ams/of-minor  cu 1300)
         d  0
-        ^Money t1  (amounts/plus-minor a b)
-        ^Money t2  (amounts/plus-minor c d)]
+        ^Money t1  (ams/plus-minor a b)
+        ^Money t2  (ams/plus-minor c d)]
     (is (= (.getCurrencyUnit t1) cu))
     (is (= (.getCurrencyUnit t2) cu))
     (is (= 25.00M (.getAmount t1)))
@@ -128,12 +159,12 @@
 
 (deftest test-substraction-of-two-monetary-values
   (let [cu CurrencyUnit/EUR
-        a  (amount-of cu 15.00)
+        a  (ams/amount-of cu 15.00)
         b  10.00M
-        c  (of-minor  cu 1300)
+        c  (ams/of-minor  cu 1300)
         d  0.00M
-        ^Money t1  (amounts/minus a b)
-        ^Money t2  (amounts/minus c d)]
+        ^Money t1  (ams/minus a b)
+        ^Money t2  (ams/minus c d)]
     (is (= (.getCurrencyUnit t1) cu))
     (is (= (.getCurrencyUnit t2) cu))
     (is (= 5.00M  (.getAmount t1)))
@@ -141,12 +172,12 @@
 
 (deftest test-substraction-with-major-units
   (let [cu CurrencyUnit/EUR
-        a  (amount-of cu 15.00)
+        a  (ams/amount-of cu 15.00)
         b  10
-        c  (of-minor  cu 1300)
+        c  (ams/of-minor  cu 1300)
         d  0
-        ^Money t1  (amounts/minus-major a b)
-        ^Money t2  (amounts/minus-major c d)]
+        ^Money t1  (ams/minus-major a b)
+        ^Money t2  (ams/minus-major c d)]
     (is (= (.getCurrencyUnit t1) cu))
     (is (= (.getCurrencyUnit t2) cu))
     (is (= 5.00M  (.getAmount t1)))
@@ -154,12 +185,12 @@
 
 (deftest test-substraction-with-minor-units
   (let [cu CurrencyUnit/EUR
-        a  (amount-of cu 15.00)
+        a  (ams/amount-of cu 15.00)
         b  1000
-        c  (of-minor  cu 1300)
+        c  (ams/of-minor  cu 1300)
         d  0
-        ^Money t1  (amounts/minus-minor a b)
-        ^Money t2  (amounts/minus-minor c d)]
+        ^Money t1  (ams/minus-minor a b)
+        ^Money t2  (ams/minus-minor c d)]
     (is (= (.getCurrencyUnit t1) cu))
     (is (= (.getCurrencyUnit t2) cu))
     (is (= 5.00M  (.getAmount t1)))
@@ -168,16 +199,16 @@
 
 (deftest test-negation
   (let [cu           CurrencyUnit/USD
-        ^Money money (negated (amount-of cu 10.00M))]
+        ^Money money (ams/negated (ams/amount-of cu 10.00M))]
     (is (= cu (.getCurrencyUnit money)))
     (is (= -10.00M (.getAmount money)))))
 
 
 (deftest test-taking-an-absolute-value
   (let [cu            CurrencyUnit/USD
-        ^Money money1 (amount-of cu 10.00M)
-        ^Money money2 (negated money1)]
+        ^Money money1 (ams/amount-of cu 10.00M)
+        ^Money money2 (ams/negated money1)]
     (is (= cu (.getCurrencyUnit money1)))
     (is (= cu (.getCurrencyUnit money2)))
-    (is (= 10.00M (.getAmount ^Money (amounts/abs money1))))
-    (is (= 10.00M (.getAmount ^Money (amounts/abs money2))))))
+    (is (= 10.00M (.getAmount ^Money (ams/abs money1))))
+    (is (= 10.00M (.getAmount ^Money (ams/abs money2))))))
