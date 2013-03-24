@@ -10,4 +10,6 @@
     cu/GBP CurrencyUnit/GBP
     cu/JPY CurrencyUnit/JPY
     cu/NOK (CurrencyUnit/of "NOK")
-    cu/RUB (CurrencyUnit/of "RUB")))
+    cu/RUB (CurrencyUnit/of "RUB")
+    (cu/of "NOK") (CurrencyUnit/of "NOK")
+    (cu/for-code "NOK") (CurrencyUnit/of "NOK")))

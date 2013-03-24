@@ -3,6 +3,20 @@
   (:import org.joda.money.CurrencyUnit))
 
 
+;;
+;; API
+;;
+
+(defn ^CurrencyUnit of
+  "Returns currency unit for the specified ISO-4217 three letter currency code"
+  [^String code]
+  (CurrencyUnit/of code))
+
+(defn ^CurrencyUnit for-code
+  "Returns currency unit for the specified ISO-4217 three letter currency code"
+  [^String code]
+  (CurrencyUnit/of code))
+
 (defmacro defalias
   [^String s]
   `(def ~(symbol s) (CurrencyUnit/of (String/valueOf ~s))))
