@@ -25,3 +25,7 @@
     "CH" cu/CHF
     "RU" cu/RUB
     "LV" cu/LVL))
+
+(deftest test-pseudo-currency
+  (is (cu/pseudo-currency? (cu/of "XXX")))
+  (is (not (cu/pseudo-currency? (cu/of "JPY")))))

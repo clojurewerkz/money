@@ -39,6 +39,11 @@
   [^String code]
   (CurrencyUnit/ofCountry code))
 
+(defn pseudo-currency?
+  "Returns true if this currency is a pseudo currency"
+  [^CurrencyUnit cu]
+  (.isPseudoCurrency cu))
+
 (defmacro defalias
   [^String s]
   `(def ~(symbol s) (CurrencyUnit/of (String/valueOf ~s))))
