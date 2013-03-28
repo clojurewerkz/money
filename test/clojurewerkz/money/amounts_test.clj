@@ -1,5 +1,6 @@
 (ns clojurewerkz.money.amounts-test
-  (:require [clojurewerkz.money.amounts :as ams])
+  (:require [clojurewerkz.money.amounts    :as ams]
+            [clojurewerkz.money.currencies :as cu])
   (:use clojure.test)
   (:import [org.joda.money CurrencyUnit Money]
            java.math.RoundingMode))
@@ -212,3 +213,14 @@
     (is (= cu (.getCurrencyUnit money2)))
     (is (= 10.00M (.getAmount ^Money (ams/abs money1))))
     (is (= 10.00M (.getAmount ^Money (ams/abs money2))))))
+
+
+(deftest test-max
+  (are [a b c] (is (= c (ams/max a b)))
+    (ams/amount-of cu/USD 10) (ams/amount-of cu/USD 20) (ams/amount-of cu/USD 20)
+    (ams/amount-of cu/GBP 30) (ams/amount-of cu/GBP 10) (ams/amount-of cu/GBP 30)))
+
+(deftest test-min
+  (are [a b c] (is (= c (ams/min a b)))
+    (ams/amount-of cu/USD 10) (ams/amount-of cu/USD 20) (ams/amount-of cu/USD 10)
+    (ams/amount-of cu/GBP 30) (ams/amount-of cu/GBP 10) (ams/amount-of cu/GBP 10)))

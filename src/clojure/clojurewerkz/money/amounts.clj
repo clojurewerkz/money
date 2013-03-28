@@ -1,29 +1,29 @@
 (ns clojurewerkz.money.amounts
   "Operations on monetary amounts, including predicates and parsing"
   (:refer-clojure :exclude [zero?])
-  (:import [org.joda.money Money BigMoney CurrencyUnit]
-           [java.math RoundingMode]))
+  (:import [org.joda.money Money BigMoney CurrencyUnit MoneyUtils]
+           java.math.RoundingMode))
 
 ;;
 ;; API
 ;;
 
-(defn amount-of
+(defn ^Money amount-of
   ([^CurrencyUnit unit ^double amount]
      (Money/of unit amount))
   ([^CurrencyUnit unit ^double amount ^RoundingMode rm]
      (Money/of unit amount rm)))
 
-(defn of-major
+(defn ^Money of-major
   [^CurrencyUnit unit ^long amount]
   (Money/ofMajor unit amount))
 
 
-(defn of-minor
+(defn ^Money of-minor
   [^CurrencyUnit unit ^long amount]
   (Money/ofMinor unit amount))
 
-(defn zero
+(defn ^Money zero
   [^CurrencyUnit unit]
   (Money/zero unit))
 
@@ -47,44 +47,54 @@
   [^Money money]
   (.isNegativeOrZero money))
 
-(defn total
+(defn ^Money total
   [^Iterable monies]
   (Money/total monies))
 
-(defn plus
-  ([^Money money ^double other]
-     (.plus money other)))
+(defn ^Money plus
+  [^Money money ^double other]
+  (.plus money other))
 
-(defn plus-major
-  ([^Money money ^long amount]
-     (.plusMajor money amount)))
+(defn ^Money plus-major
+  [^Money money ^long amount]
+  (.plusMajor money amount))
 
-(defn plus-minor
-  ([^Money money ^long amount]
-     (.plusMinor money amount)))
+(defn ^Money plus-minor
+  [^Money money ^long amount]
+  (.plusMinor money amount))
 
-(defn minus
-  ([^Money money ^double other]
-     (.minus money other)))
+(defn ^Money minus
+  [^Money money ^double other]
+  (.minus money other))
 
-(defn minus-major
-  ([^Money money ^long amount]
-     (.minusMajor money amount)))
+(defn ^Money minus-major
+  [^Money money ^long amount]
+  (.minusMajor money amount))
 
-(defn minus-minor
-  ([^Money money ^long amount]
-     (.minusMinor money amount)))
+(defn ^Money minus-minor
+  [^Money money ^long amount]
+  (.minusMinor money amount))
 
 
-(defn parse
+(defn ^Money parse
   [^String s]
   (Money/parse s))
 
 
-(defn negated
+(defn ^Money negated
   [^Money money]
   (.negated money))
 
-(defn abs
+(defn ^Money abs
   [^Money money]
   (.abs money))
+
+(defn ^Money max
+  "Returns the greater of the two money amounts"
+  [^Money a ^Money b]
+  (MoneyUtils/max a b))
+
+(defn ^Money min
+  "Returns the lesser of the two money amounts"
+  [^Money a ^Money b]
+  (MoneyUtils/min a b))
