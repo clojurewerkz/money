@@ -1,6 +1,6 @@
 (ns clojurewerkz.money.amounts
   "Operations on monetary amounts, including predicates and parsing"
-  (:refer-clojure :exclude [zero?])
+  (:refer-clojure :exclude [zero? max min])
   (:import [org.joda.money Money BigMoney CurrencyUnit MoneyUtils]
            java.math.RoundingMode))
 
