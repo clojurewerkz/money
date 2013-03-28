@@ -1,5 +1,10 @@
 ## Changes between 1.0.0-beta2 and 1.0.0-beta2
 
+### clojurewerkz.money.amounts/max and min
+
+`clojurewerkz.money.amounts/max` and `clojurewerkz.money.amounts/min` are
+new functions that return the greater and the lesser of two monetary amounts.
+
 ### clojurewerkz.money.currencies
 
 `clojurewerkz.money.currencies` is a new namespace that defines vars with currency
