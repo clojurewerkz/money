@@ -13,3 +13,9 @@
     cu/RUB (CurrencyUnit/of "RUB")
     (cu/of "NOK") (CurrencyUnit/of "NOK")
     (cu/for-code "NOK") (CurrencyUnit/of "NOK")))
+
+
+(deftest test-currency-numeric-codes
+  (are [code unit] (is (= unit (cu/of-numeric-code code) (cu/of-numeric-code code)))
+    756 cu/CHF
+    643 cu/RUB))

@@ -17,6 +17,16 @@
   [^String code]
   (CurrencyUnit/of code))
 
+(defn ^CurrencyUnit of-numeric-code
+  "Returns currency unit for the specified numeric currency code"
+  [^long code]
+  (CurrencyUnit/ofNumericCode code))
+
+(defn ^CurrencyUnit for-numeric-code
+  "Returns currency unit for the specified numeric currency code"
+  [^long code]
+  (CurrencyUnit/ofNumericCode code))
+
 (defmacro defalias
   [^String s]
   `(def ~(symbol s) (CurrencyUnit/of (String/valueOf ~s))))
