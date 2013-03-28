@@ -19,3 +19,9 @@
   (are [code unit] (is (= unit (cu/of-numeric-code code) (cu/of-numeric-code code)))
     756 cu/CHF
     643 cu/RUB))
+
+(deftest test-currency-countries
+  (are [code unit] (is (= unit (cu/of-country code) (cu/for-country code)))
+    "CH" cu/CHF
+    "RU" cu/RUB
+    "LV" cu/LVL))

@@ -27,6 +27,18 @@
   [^long code]
   (CurrencyUnit/ofNumericCode code))
 
+(defn ^CurrencyUnit of-country
+  "Returns currency unit for the specified country code. This
+   function is case sensitive."
+  [^String code]
+  (CurrencyUnit/ofCountry code))
+
+(defn ^CurrencyUnit for-country
+  "Returns currency unit for the specified country code. This
+   function is case sensitive."
+  [^String code]
+  (CurrencyUnit/ofCountry code))
+
 (defmacro defalias
   [^String s]
   `(def ~(symbol s) (CurrencyUnit/of (String/valueOf ~s))))
