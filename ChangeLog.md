@@ -1,4 +1,4 @@
-## Changes between 1.0.0-beta2 and 1.0.0
+## Changes between 1.0.0-beta1 and 1.0.0
 
 ### Monger Integration
 
