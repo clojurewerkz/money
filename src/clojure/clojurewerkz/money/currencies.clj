@@ -44,6 +44,21 @@
   [^CurrencyUnit cu]
   (.isPseudoCurrency cu))
 
+(defprotocol ToCurrencyUnit
+  (to-currency-unit [input] "Converts input to a CurrencyUnit instance"))
+
+(extend-protocol ToCurrencyUnit
+  String
+  (to-currency-unit [^String s]
+    (of s))
+
+  CurrencyUnit
+  (to-currency-unit [^CurrencyUnit cu]
+    cu))
+
+
+
+
 (defmacro defalias
   [^String s]
   `(def ~(symbol s) (CurrencyUnit/of (String/valueOf ~s))))
