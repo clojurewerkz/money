@@ -1,4 +1,31 @@
-## Changes between 1.0.0-beta2 and 1.0.0-beta2
+## Changes between 1.0.0-beta2 and 1.0.0
+
+### Monger Integration
+
+`clojurewerkz.money.monger`, when loaded, registers BSON serializers for `org.joda.money.Money`
+and `org.joda.money.CurrencyUnit`. Serialization conventions used are straightforward and
+produce human readable values:
+
+ * `(clojurewerkz.money.currencies/USD)` => `"USD"`
+ * `(clojurewerkz.money.amounts/amount-of (clojurewerkz.money.currencies/USD) 20.5)` => `{"currency-unit" "USD" "amount-in-minor-units" 2050}`
+
+Note that serialization is one-way: loaded documents are returned as maps because there is no way to tell
+them from regular BSON documents. `clojurewerkz.money.monger/from-stored-map` can be used to produce `Money` instances
+from maps following the serialization convention described above.
+
+
+### Cheshire Integration
+
+`clojurewerkz.money.json`, when loaded, registers serializers for `org.joda.money.Money`
+and `org.joda.money.CurrencyUnit`. Serialization conventions used are straightforward and
+produce human readable values:
+
+ * `(clojurewerkz.money.currencies/USD)` => `"USD"`
+ * `(clojurewerkz.money.amounts/amount-of (clojurewerkz.money.currencies/USD) 20.5)` => `"USD 20.50"`
+
+
+This requires Cheshire `5.0.x` or later. `clojure.data.json` is not supported.
+
 
 ### clojurewerkz.money.amounts/max and min
 
