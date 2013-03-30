@@ -1,6 +1,7 @@
 (ns clojurewerkz.money.lib-integration-test
   (:require [monger.conversion :as cnv]
             [cheshire.core :as json]
+            clojurewerkz.money.json
             [clojurewerkz.money.monger  :as cmm]
             [clojurewerkz.money.amounts :as cm]
             [clojurewerkz.money.currencies :as cc])
