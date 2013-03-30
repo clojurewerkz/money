@@ -1,34 +1,37 @@
 # ClojureWerkz Money, a Clojure Library to Work With Money
 
-ClojureWerkz Money is a Clojure library that deals with monetary values
+ClojureWerkz Money is a Clojure library that deals with monetary amounts.
+It is built on top of [Joda Money](http://joda-money.sourceforge.net/).
 
 
-## Documentation & Examples
+## Project Goals
 
-ClojureWerkz Money is a very young project and until 1.0 is released and documentation guides are written,
-it may be challenging to use for anyone except the author. For code examples, see our test
-suite.
-
-Once the library matures, we will update this document.
-
-## Community
-
-[ClojureWerkz Money has a mailing list](https://groups.google.com/group/clojure-money). Feel free to join it and ask any questions you may have.
-
-To subscribe for announcements of releases, important changes and so on, please follow [@ClojureWerkz](https://twitter.com/#!/clojurewerkz) on Twitter.
+ * Expose most or all Joda Money features in an easy to use way
+ * Be well documented and well tested
+ * Integrate with popular libraries such as [Cheshire](https://github.com/dakrone/cheshire) and [Monger](http://clojuremongodb.info)
+ * Don't introduce any significant amount of performance overhead
 
 
-## This is a Work In Progress
+## Project Maturity
 
-This is a young project that is still very much a work in progress.
+Money is rapidly approaching the `1.0` release but it is still a young project.
+Keeps thi in mind.
 
 
 
 ## Maven Artifacts
 
-### Snapshots
+Money artifacts are [released to Clojars](https://clojars.org/clojurewerkz/money). If you are using Maven, add the following repository
+definition to your `pom.xml`:
 
-If you are comfortable with using snapshots, snapshot artifacts are [released to Clojars](https://clojars.org/clojurewerkz/money) every few days.
+``` xml
+<repository>
+  <id>clojars.org</id>
+  <url>http://clojars.org/repo</url>
+</repository>
+```
+
+### Most Recent Release
 
 With Leiningen:
 
@@ -44,9 +47,96 @@ With Maven:
     </dependency>
 
 
-## Supported Clojure versions
+## Documentation
+
+### Monetary Amounts
+
+Monetary amounts are instantiated using `clojurewerkz.money.amounts` functions. They operate on
+floating point amounts (doubles) or long values in major units (e.g. dollars) or minor units (e.g. cents).
+
+``` clojure
+(require '[clojurewerkz.money.amounts :as ma])
+(require '[clojurewerkz.money.currencies :as mc])
+
+;; USD 10.50
+(ma/amount-of mc/USD 10.5)
+;; USD 10
+(ma/of-major mc/USD 10)
+;; USD 10.50
+(ma/of-minor mc/USD 1050)
+
+;; JPY 1000
+(ma/of-major mc/JPY 1000)
+```
+
+Note that not all currencies have minor units (most notably JPY does not).
+
+It is possible to parse a string in the standard format `[currency unit] [amount]`, e.g. `JPY 1000`:
+
+``` clojure
+(require '[clojurewerkz.money.amounts :as ma])
+
+(ma/parse "JPY 1000")
+;= org.joda.money.Money instance for JPY 1000
+```
+
+Monetary amounts can be added, substracted and so on using `clojurewerkz.money.amounts/plus`,
+`clojurewerkz.money.amounts/minus`, `clojurewerkz.money.amounts/multiply`, and
+`clojurewerkz.money.amounts/divide` functions:
+
+``` clojure
+(require '[clojurewerkz.money.amounts    :as ma])
+(require '[clojurewerkz.money.currencies :as mc])
+
+(ma/plus (ma/amount-of mc/USD 10) (ma/amount-of mc/USD 100))
+;= USD 110
+
+(ma/minus (ma/amount-of mc/USD 100) (ma/amount-of mc/USD 10))
+;= USD 90
+```
+
+It is possible to add up all monies in a collection or sequence using `clojurewerkz.money.amounts/total`:
+
+``` clojure
+(require '[clojurewerkz.money.amounts    :as ma])
+(require '[clojurewerkz.money.currencies :as mc])
+
+(ma/total [(ma/amount-of mc/USD 10) (ma/amount-of mc/USD 100)])
+;= USD 110
+```
+
+
+### Currencies
+
+Currency units use their ISO-4217 codes and 
+
+TBD
+
+
+### Cheshire Integration
+
+TBD
+
+
+### Monger Integration
+
+TBD
+
+
+
+
+## Community
+
+[ClojureWerkz Money has a mailing list](https://groups.google.com/group/clojure-money). Feel free to join it and ask any questions you may have.
+
+To subscribe for announcements of releases, important changes and so on, please follow [@ClojureWerkz](https://twitter.com/#!/clojurewerkz) on Twitter.
+
+
+
+## Supported Clojure Versions
 
 ClojureWerkz Money is built from the ground up for Clojure 1.3 and up.
+The most recent release is always recommended.
 
 
 ## Continuous Integration
@@ -64,7 +154,7 @@ against all supported Clojure versions using
     lein2 all test
 
 Then create a branch and make your changes on it. Once you are done with your changes and all tests pass, submit
-a pull request on Github.
+a pull request on GitHub.
 
 
 ## License
