@@ -1,4 +1,10 @@
 (ns clojurewerkz.money.json
+  "Provides Cheshire integration.
+
+   org.joda.money.Money instances are serialized to strings with human-readable
+   amounts following ISO-4217 currency codes.
+
+   Currency units are serialized to strings by taking their ISO-4217 codes."
   (:require cheshire.generate)
   (:import [org.joda.money Money CurrencyUnit]))
 
