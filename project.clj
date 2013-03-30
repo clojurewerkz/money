@@ -9,7 +9,6 @@
   :profiles {:dev {:plugins      [[codox "0.6.4"]]
                    :dependencies [[com.novemberain/monger "1.5.0"]
                                   [cheshire               "5.0.2"]]}
-             :1.3 {:dependencies [[org.clojure/clojure "1.3.0"]]}
              :1.4 {:dependencies [[org.clojure/clojure "1.4.0"]]}
              :1.6 {:dependencies [[org.clojure/clojure "1.6.0-master-SNAPSHOT"]]}
              :master {:dependencies [[org.clojure/clojure "1.6.0-master-SNAPSHOT"]]}}
@@ -19,7 +18,7 @@
                  "sonatype-snapshots" {:url "http://oss.sonatype.org/content/repositories/snapshots"
                                        :snapshots true
                                        :releases {:checksum :fail :update :always}}}
-  :aliases  {"all" ["with-profile" "+dev:+1.3:+1.4:+1.6:+master"]}
+  :aliases  {"all" ["with-profile" "+dev:+1.4:+1.6:+master"]}
   :source-paths      ["src/clojure"]
   :java-source-paths ["src/java"]
   :warn-on-reflection true)

@@ -135,7 +135,7 @@ To subscribe for announcements of releases, important changes and so on, please 
 
 ## Supported Clojure Versions
 
-ClojureWerkz Money is built from the ground up for Clojure 1.3 and up.
+ClojureWerkz Money is built from the ground up for Clojure 1.4 and up.
 The most recent release is always recommended.
 
 
