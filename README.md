@@ -108,21 +108,64 @@ It is possible to add up all monies in a collection or sequence using `clojurewe
 
 ### Currencies
 
-Currency units use their ISO-4217 codes and 
+Currency units use their ISO-4217 codes and represented by `org.joda.money.CurrencyUnit` instances.
+Usually the easiest way to use currency units is via `clojurewerkz.money.currencies` aliases:
 
-TBD
+``` clojure
+(require '[clojurewerkz.money.currencies :as mc])
+
+mc/USD ;= USD currency unit
+mc/CAD ;= CAD currency unit
+mc/GBP ;= GBP currency unit
+mc/RUB ;= RUB currency unit
+```
+
+`clojurewerkz.money.currencies/for-code` and `clojurewerkz.money.currencies/of-country` can be used
+to get currency units by their ISO-4217 code strings and country abbreviations:
+
+``` clojure
+(require '[clojurewerkz.money.currencies :as mc])
+
+(mc/for-code "CHF")   ;= CHF currency unit
+(mc/for-country "CH") ;= CHF currency unit
+```
+
+`clojurewerkz.money.currencies/pseudo-currency?` is a predicate function that takes a currency unit
+and returns true if it is a pseudo-currency (e.g. [Bitcoin](http://bitcoin.org) or [IMF Special Drawing Rights](http://www.imf.org/external/np/exr/facts/sdr.htm)).
 
 
 ### Cheshire Integration
 
-TBD
+`clojurewerkz.money.json`, when loaded, registers serializers for
+`org.joda.money.Money` and `org.joda.money.CurrencyUnit` with
+Cheshire.  Serialization conventions used are straightforward and
+produce human readable values:
+
+ * `(clojurewerkz.money.currencies/USD)` => `"USD"`
+ * `(clojurewerkz.money.amounts/amount-of (clojurewerkz.money.currencies/USD) 20.5)` => `"USD 20.50"`
+
+To use it, simply require the namespace and then use Cheshire
+generation functions as usual.
+
+This extension requires Cheshire `5.0.x` or later. `clojure.data.json`
+is not supported.
 
 
 ### Monger Integration
 
-TBD
+`clojurewerkz.money.monger`, when loaded, registers BSON serializers
+for `org.joda.money.Money` and
+`org.joda.money.CurrencyUnit`. Serialization conventions used are
+straightforward and produce human readable values:
 
+ * `(clojurewerkz.money.currencies/USD)` => `"USD"`
+ * `(clojurewerkz.money.amounts/amount-of (clojurewerkz.money.currencies/USD) 20.5)` => `{"currency-unit" "USD" "amount-in-minor-units" 2050}`
 
+Note that serialization is one-way: loaded documents are returned as
+maps because there is no way to tell them from regular BSON
+documents. `clojurewerkz.money.monger/from-stored-map` can be used to
+produce `Money` instances from maps following the serialization
+convention described above.
 
 
 ## Community
