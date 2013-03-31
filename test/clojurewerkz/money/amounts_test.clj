@@ -224,3 +224,18 @@
   (are [a b c] (is (= c (ams/min a b)))
     (ams/amount-of cu/USD 10) (ams/amount-of cu/USD 20) (ams/amount-of cu/USD 10)
     (ams/amount-of cu/GBP 30) (ams/amount-of cu/GBP 10) (ams/amount-of cu/GBP 10)))
+
+(deftest test-multiplication
+  (let [oa (ams/amount-of cu/USD 100)
+        ma (ams/multiply oa 2)]
+    (is (= ma (ams/amount-of cu/USD 200)))))
+
+(deftest test-division
+  (let [oa (ams/amount-of cu/USD 100)
+        ma (ams/divide oa 2)]
+    (is (= ma (ams/amount-of cu/USD 50)))))
+
+(deftest test-division
+  (let [oa (ams/amount-of cu/USD 100.01)
+        ma (ams/divide oa 2 :floor)]
+    (is (= ma (ams/amount-of cu/USD 50)))))
