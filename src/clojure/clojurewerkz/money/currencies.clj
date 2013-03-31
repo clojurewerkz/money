@@ -1,5 +1,9 @@
 (ns clojurewerkz.money.currencies
-  "Provides var aliases for org.joda.money.CurrencyUnit constants"
+  "Provides functions that return currency units by their ISO 4217 codes and country
+   codes.
+
+   Includes var aliases for org.joda.money.CurrencyUnit constants, for example,
+   clojurewerkz.money.currencies/USD or clojurewerkz.money.currencies/GBP."
   (:import org.joda.money.CurrencyUnit))
 
 
