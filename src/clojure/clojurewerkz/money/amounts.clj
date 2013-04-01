@@ -108,3 +108,8 @@
   "Returns the lesser of the two money amounts"
   [^Money a ^Money b]
   (MoneyUtils/min a b))
+
+(defn ^Money round
+  [^Money money ^long scale rounding-mode]
+  (.rounded money scale (cnv/to-rounding-mode rounding-mode)))
+

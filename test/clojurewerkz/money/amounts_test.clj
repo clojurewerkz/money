@@ -217,13 +217,13 @@
 
 (deftest test-max
   (are [a b c] (is (= c (ams/max a b)))
-    (ams/amount-of cu/USD 10) (ams/amount-of cu/USD 20) (ams/amount-of cu/USD 20)
-    (ams/amount-of cu/GBP 30) (ams/amount-of cu/GBP 10) (ams/amount-of cu/GBP 30)))
+       (ams/amount-of cu/USD 10) (ams/amount-of cu/USD 20) (ams/amount-of cu/USD 20)
+       (ams/amount-of cu/GBP 30) (ams/amount-of cu/GBP 10) (ams/amount-of cu/GBP 30)))
 
 (deftest test-min
   (are [a b c] (is (= c (ams/min a b)))
-    (ams/amount-of cu/USD 10) (ams/amount-of cu/USD 20) (ams/amount-of cu/USD 10)
-    (ams/amount-of cu/GBP 30) (ams/amount-of cu/GBP 10) (ams/amount-of cu/GBP 10)))
+       (ams/amount-of cu/USD 10) (ams/amount-of cu/USD 20) (ams/amount-of cu/USD 10)
+       (ams/amount-of cu/GBP 30) (ams/amount-of cu/GBP 10) (ams/amount-of cu/GBP 10)))
 
 (deftest test-multiplication
   (let [oa (ams/amount-of cu/USD 100)
@@ -239,3 +239,37 @@
   (let [oa (ams/amount-of cu/USD 100.01)
         ma (ams/divide oa 2 :floor)]
     (is (= ma (ams/amount-of cu/USD 50)))))
+
+(deftest test-round
+  (testing "with scale -1 and flooring rouding mode"
+    (let [oa (ams/amount-of cu/USD 40.01)
+          ma (ams/round oa -1 :floor)]
+      (is (= ma (ams/amount-of cu/USD 40))))
+    (testing "with scale -1 and up rouding mode"
+      (let [oa (ams/amount-of cu/USD 40.01)
+            ma (ams/round oa -1 :up)]
+        (is (= ma (ams/amount-of cu/USD 50)))))
+    (testing "with scale 0 and flooring rouding mode"
+      (let [oa (ams/amount-of cu/USD 45.24)
+            ma (ams/round oa 0 :floor)]
+        (is (= ma (ams/amount-of cu/USD 45)))))
+    (testing "with scale 0 and up rouding mode"
+      (let [oa (ams/amount-of cu/USD 45.24)
+            ma (ams/round oa 0 :up)]
+        (is (= ma (ams/amount-of cu/USD 46)))))
+    (testing "with scale 1 and flooring rouding mode"
+      (let [oa (ams/amount-of cu/USD 45.24)
+            ma (ams/round oa 1 :floor)]
+        (is (= ma (ams/amount-of cu/USD 45.20)))))
+    (testing "with scale 1 and up rouding mode"
+      (let [oa (ams/amount-of cu/USD 45.24)
+            ma (ams/round oa 1 :up)]
+        (is (= ma (ams/amount-of cu/USD 45.30)))))
+    (testing "with scale 2 and flooring rouding mode"
+      (let [oa (ams/amount-of cu/USD 45.24)
+            ma (ams/round oa 2 :floor)]
+        (is (= ma (ams/amount-of cu/USD 45.24)))))
+    (testing "with scale 2 and up rouding mode"
+      (let [oa (ams/amount-of cu/USD 45.24)
+            ma (ams/round oa 1 :up)]
+        (is (= ma (ams/amount-of cu/USD 45.30)))))))
