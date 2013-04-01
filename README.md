@@ -105,6 +105,34 @@ It is possible to add up all monies in a collection or sequence using `clojurewe
 ;= USD 110
 ```
 
+### Rounding
+
+`clojurewerkz.money.amounts/round` is a function that performs rounding of
+monetary values using one of the rounding modes:
+
+``` clojure
+(require '[clojurewerkz.money.amounts :as ams])
+
+(ams/round (ams/amount-of cu/USD 40.01) -1 :floor)
+;= USD 40
+
+(ams/round (ams/amount-of cu/USD 40.01) -1 :up)
+;= USD 50
+
+(ams/round (ams/amount-of cu/USD 45.24) 0 :floor)
+;= USD 45
+
+(ams/round (ams/amount-of cu/USD 45.24) 0 :up)
+;= USD 46
+
+(ams/round (ams/amount-of cu/USD 45.24) 1 :floor)
+;= USD 45.20
+
+(ams/round (ams/amount-of cu/USD 45.24) 1 :up)
+;= USD 45.30
+```
+
+
 
 ### Currencies
 
@@ -132,6 +160,19 @@ to get currency units by their ISO-4217 code strings and country abbreviations:
 
 `clojurewerkz.money.currencies/pseudo-currency?` is a predicate function that takes a currency unit
 and returns true if it is a pseudo-currency (e.g. [Bitcoin](http://bitcoin.org) or [IMF Special Drawing Rights](http://www.imf.org/external/np/exr/facts/sdr.htm)).
+
+
+### Currency Conversion
+
+`clojurewerkz.money.amounts/convert-to` converts a monetary value in one currency
+to another using provided exchange rate and rounding mode:
+
+``` clojure
+(require '[clojurewerkz.money.amounts :as ams])
+
+(ams/convert-to (ams/amount-of cu/GBP 65.65) cu/USD 1.523 :down)
+;= USD 99.98
+```
 
 
 ### Cheshire Integration
