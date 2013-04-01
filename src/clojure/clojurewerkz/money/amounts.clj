@@ -1,6 +1,7 @@
 (ns clojurewerkz.money.amounts
   "Operations on monetary amounts, including predicates and parsing"
   (:refer-clojure :exclude [zero? max min])
+  (:require [clojurewerkz.money.conversion :as cnv])
   (:import [org.joda.money Money BigMoney CurrencyUnit MoneyUtils]
            java.math.RoundingMode))
 
@@ -75,6 +76,15 @@
   [^Money money ^long amount]
   (.minusMinor money amount))
 
+(defn ^Money multiply
+  [^Money money ^double multiplier]
+  (.multipliedBy money multiplier))
+
+(defn ^Money divide
+  ([^Money money ^double multiplier]
+     (.dividedBy money multiplier (cnv/to-rounding-mode nil)))
+  ([^Money money ^double multiplier rounding-mode]
+     (.dividedBy money multiplier (cnv/to-rounding-mode rounding-mode))))
 
 (defn ^Money parse
   [^String s]
