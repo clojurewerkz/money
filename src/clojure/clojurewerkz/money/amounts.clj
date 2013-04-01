@@ -1,5 +1,5 @@
 (ns clojurewerkz.money.amounts
-  "Operations on monetary amounts, including predicates and parsing"
+  "Operations on monetary amounts, including conversion, parsing, and predicates"
   (:refer-clojure :exclude [zero? max min])
   (:require [clojurewerkz.money.conversion :as cnv])
   (:import [org.joda.money Money BigMoney CurrencyUnit MoneyUtils]
@@ -25,77 +25,105 @@
   (Money/ofMinor unit amount))
 
 (defn ^Money zero
+  "Returns zero monetary amount for the given currency unit"
   [^CurrencyUnit unit]
   (Money/zero unit))
 
 (defn zero?
+  "Returns true if the given monetary amount is zero"
   [^Money money]
   (.isZero money))
 
 (defn positive?
+  "Returns true if the given monetary amount is positive"
   [^Money money]
   (.isPositive money))
 
 (defn negative?
+  "Returns true if the given monetary amount is negative"
   [^Money money]
   (.isNegative money))
 
 (defn positive-or-zero?
+  "Returns true if the given monetary amount is positive or zero"
   [^Money money]
   (.isPositiveOrZero money))
 
 (defn negative-or-zero?
+  "Returns true if the given monetary amount is negative or zero"
   [^Money money]
   (.isNegativeOrZero money))
 
 (defn ^Money total
+  "Sums up multiple monetary amounts"
   [^Iterable monies]
   (Money/total monies))
 
 (defn ^Money plus
+  "Adds two monetary amounts together"
   [^Money money ^double other]
   (.plus money other))
 
 (defn ^Money plus-major
+  "Adds two monetary amounts together, taking one of them in
+   major units (e.g. dollars)"
   [^Money money ^long amount]
   (.plusMajor money amount))
 
 (defn ^Money plus-minor
+  "Adds two monetary amounts together, taking one of them in
+   minor units (e.g. cents)"
   [^Money money ^long amount]
   (.plusMinor money amount))
 
 (defn ^Money minus
+  "Subtracts one monetary amount from another, taking one of them in
+   major units (e.g. dollars)"
   [^Money money ^double other]
   (.minus money other))
 
 (defn ^Money minus-major
+  "Subtracts one monetary amount from another, taking one of them in
+   minor units (e.g. cents)"
   [^Money money ^long amount]
   (.minusMajor money amount))
 
 (defn ^Money minus-minor
+  "Subtracts one monetary amount from another"
   [^Money money ^long amount]
   (.minusMinor money amount))
 
 (defn ^Money multiply
+  "Multiples monetary amount by the given number"
   [^Money money ^double multiplier]
   (.multipliedBy money multiplier))
 
 (defn ^Money divide
+  "Divides monetary amount by the given number. Takes an optional arounding
+   mode which is one of:
+
+   * java.math.RoundingMode instances
+   * :floor, :ceiling, :up, :down, :half-up, :half-down, :hald-even that correspond to
+     java.math.RoundingMode constants with the same names
+   * nil for no rounding"
   ([^Money money ^double multiplier]
      (.dividedBy money multiplier (cnv/to-rounding-mode nil)))
   ([^Money money ^double multiplier rounding-mode]
      (.dividedBy money multiplier (cnv/to-rounding-mode rounding-mode))))
 
 (defn ^Money parse
+  "Parses a string in the format of [currency code] [amount as double]
+   (e.g. GBP 20.00) and returns a monetary amount."
   [^String s]
   (Money/parse s))
 
-
 (defn ^Money negated
+  "Negates the given monetary amount"
   [^Money money]
   (.negated money))
 
 (defn ^Money abs
+  "Takes absolute value of the given monetary amount"
   [^Money money]
   (.abs money))
 
@@ -110,9 +138,30 @@
   (MoneyUtils/min a b))
 
 (defn ^Money round
+  "Rounds monetary amount using the given scale and rounding mode.
+
+   Scale is one of -1, 0, 1, 2, 3 but no greater than the currency's scale.
+
+   Rounding mode should be one of:
+
+   * java.math.RoundingMode instances
+   * :floor, :ceiling, :up, :down, :half-up, :half-down, :hald-even that correspond to
+     java.math.RoundingMode constants with the same names
+   * nil for no rounding"
   [^Money money ^long scale rounding-mode]
   (.rounded money scale (cnv/to-rounding-mode rounding-mode)))
 
 (defn ^Money convert-to
+  "Converts monetary amount in one currency to monetary amount in a different
+   currency using the provided multiplier (exchange rate) and rounding mode.
+
+   Multipler should be either a java.math.BigDecimal or a double.
+
+   Rounding mode should be one of:
+
+   * java.math.RoundingMode instances
+   * :floor, :ceiling, :up, :down, :half-up, :half-down, :hald-even that correspond to
+     java.math.RoundingMode constants with the same names
+   * nil for no rounding"
   [^Money money ^CurrencyUnit currency multiplier rounding-mode]
   (.convertedTo money currency (BigDecimal/valueOf multiplier) (cnv/to-rounding-mode rounding-mode)))
