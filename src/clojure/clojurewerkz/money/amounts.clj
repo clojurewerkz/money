@@ -3,7 +3,7 @@
   (:refer-clojure :exclude [zero? max min])
   (:require [clojurewerkz.money.conversion :as cnv])
   (:import [org.joda.money Money BigMoney CurrencyUnit MoneyUtils]
-           java.math.RoundingMode))
+           [java.math RoundingMode BigDecimal]))
 
 ;;
 ;; API
@@ -113,3 +113,6 @@
   [^Money money ^long scale rounding-mode]
   (.rounded money scale (cnv/to-rounding-mode rounding-mode)))
 
+(defn ^Money convert-to
+  [^Money money ^CurrencyUnit currency multiplier rounding-mode]
+  (.convertedTo money currency (BigDecimal/valueOf multiplier) (cnv/to-rounding-mode rounding-mode)))
