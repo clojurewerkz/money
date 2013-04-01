@@ -1,6 +1,44 @@
-## Changes between 1.0.0-beta2 and 1.0.0-beta3
+## Changes between 1.0.0-beta2 and 1.0.0
 
-No changes yet.
+### clojurewerkz.money.amounts/convert-to
+
+`clojurewerkz.money.amounts/convert-to` converts a monetary value in one currency
+to another using provided exchange rate and rounding mode:
+
+``` clojure
+(require '[clojurewerkz.money.amounts :as ams])
+
+(ams/convert-to (ams/amount-of cu/GBP 65.65) cu/USD 1.523 :down)
+;= USD 99.98
+```
+
+
+### clojurewerkz.money.amounts/round
+
+`clojurewerkz.money.amounts/round` is a new function that performs rounding of
+monetary values using one of the rounding modes:
+
+``` clojure
+(require '[clojurewerkz.money.amounts :as ams])
+
+(ams/round (ams/amount-of cu/USD 40.01) -1 :floor)
+;= USD 40
+
+(ams/round (ams/amount-of cu/USD 40.01) -1 :up)
+;= USD 50
+
+(ams/round (ams/amount-of cu/USD 45.24) 0 :floor)
+;= USD 45
+
+(ams/round (ams/amount-of cu/USD 45.24) 0 :up)
+;= USD 46
+
+(ams/round (ams/amount-of cu/USD 45.24) 1 :floor)
+;= USD 45.20
+
+(ams/round (ams/amount-of cu/USD 45.24) 1 :up)
+;= USD 45.30
+```
 
 
 ## Changes between 1.0.0-beta1 and 1.0.0-beta2
