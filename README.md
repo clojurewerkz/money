@@ -93,6 +93,13 @@ Monetary amounts can be added, substracted and so on using `clojurewerkz.money.a
 
 (ma/minus (ma/amount-of mc/USD 100) (ma/amount-of mc/USD 10))
 ;= USD 90
+
+(ma/multiply (ma/amount-of mc/USD 100) 10)
+;= USD 1000
+
+;; :floor for flooring round mode
+(ma/divide (ma/amount-of mc/USD 100.1) 10 :floor)
+;= USD 10
 ```
 
 It is possible to add up all monies in a collection or sequence using `clojurewerkz.money.amounts/total`:
