@@ -14,8 +14,7 @@ It is built on top of [Joda Money](http://joda-money.sourceforge.net/).
 
 ## Project Maturity
 
-Money is rapidly approaching the `1.0` release but it is still a young project.
-Keeps thi in mind.
+Money has reached `1.0` and is considered to be a complete, stable library.
 
 
 
@@ -35,7 +34,7 @@ definition to your `pom.xml`:
 
 With Leiningen:
 
-    [clojurewerkz/money "1.0.0-beta1"]
+    [clojurewerkz/money "1.0.0"]
 
 
 With Maven:
@@ -43,7 +42,7 @@ With Maven:
     <dependency>
       <groupId>clojurewerkz</groupId>
       <artifactId>money</artifactId>
-      <version>1.0.0-beta1</version>
+      <version>1.0.0</version>
     </dependency>
 
 
