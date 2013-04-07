@@ -1,6 +1,6 @@
 (ns clojurewerkz.money.amounts
   "Operations on monetary amounts, including conversion, parsing, and predicates"
-  (:refer-clojure :exclude [zero? max min])
+  (:refer-clojure :exclude [zero? max min > >= < <=])
   (:require [clojurewerkz.money.conversion :as cnv])
   (:import [org.joda.money Money BigMoney CurrencyUnit MoneyUtils]
            [java.math RoundingMode BigDecimal]))
@@ -142,6 +142,58 @@
      (MoneyUtils/min a b))
   ([a b & more]
      (reduce min (min a b) more)))
+
+(defn >
+  "Returns true if the given money amounts are in monotonically decreasing order,
+  otherwise false."
+  ([a] a)
+  ([^Money a ^Money b]
+     (.isGreaterThan a b))
+  ([a b & more]
+     (if (> a b)
+       (if (next more)
+         (recur a (first more) (next more))
+         (> b (first more)))
+       false)))
+
+(defn >=
+  "Returns true if the given money amounts are in monotonically non-increasing order,
+  otherwise false."
+  ([a] a)
+  ([^Money a ^Money b]
+     (or (.isGreaterThan a b) (= a b)))
+  ([a b & more]
+     (if (>= a b)
+       (if (next more)
+         (recur b (first more) (next more))
+         (>= b (first more)))
+       false)))
+
+(defn <
+  "Returns true if the given money amounts are in monotonically decreasing order,
+  otherwise false."
+  ([a] a)
+  ([^Money a ^Money b]
+     (.isLessThan a b))
+  ([a b & more]
+     (if (< a b)
+       (if (next more)
+         (recur a (first more) (next more))
+         (< b (first more)))
+       false)))
+
+(defn <=
+  "Returns true if the given money amounts are in monotonically non-decreasing order,
+  otherwise false."
+  ([a] a)
+  ([^Money a ^Money b]
+     (or (.isLessThan a b) (= a b)))
+  ([a b & more]
+     (if (<= a b)
+       (if (next more)
+         (recur a (first more) (next more))
+         (<= b (first more)))
+       false)))
 
 (defn ^Money round
   "Rounds monetary amount using the given scale and rounding mode.
