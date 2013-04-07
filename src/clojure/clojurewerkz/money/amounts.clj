@@ -128,14 +128,20 @@
   (.abs money))
 
 (defn ^Money max
-  "Returns the greater of the two money amounts"
-  [^Money a ^Money b]
-  (MoneyUtils/max a b))
+  "Returns the greatest of the given money amounts"
+  ([a] a)
+  ([^Money a ^Money b]
+     (MoneyUtils/max a b))
+  ([a b & more]
+     (reduce max (max a b) more)))
 
 (defn ^Money min
-  "Returns the lesser of the two money amounts"
-  [^Money a ^Money b]
-  (MoneyUtils/min a b))
+  "Returns the least of the given money amounts"
+  ([a] a)
+  ([^Money a ^Money b]
+     (MoneyUtils/min a b))
+  ([a b & more]
+     (reduce min (min a b) more)))
 
 (defn ^Money round
   "Rounds monetary amount using the given scale and rounding mode.
