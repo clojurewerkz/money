@@ -216,14 +216,65 @@
 
 
 (deftest test-max
+  (is (= (ams/amount-of cu/USD 10) (ams/max (ams/amount-of cu/USD 10))))
+  (is (= (ams/amount-of cu/GBP 3) (ams/max (ams/amount-of cu/GBP 3))))
   (are [a b c] (is (= c (ams/max a b)))
        (ams/amount-of cu/USD 10) (ams/amount-of cu/USD 20) (ams/amount-of cu/USD 20)
-       (ams/amount-of cu/GBP 30) (ams/amount-of cu/GBP 10) (ams/amount-of cu/GBP 30)))
+       (ams/amount-of cu/GBP 30) (ams/amount-of cu/GBP 10) (ams/amount-of cu/GBP 30))
+  (are [a b c d] (is (= d (ams/max a b c)))
+       (ams/amount-of cu/USD 5) (ams/amount-of cu/USD 20) (ams/amount-of cu/USD 10) (ams/amount-of cu/USD 20)
+       (ams/amount-of cu/GBP 8) (ams/amount-of cu/GBP 3) (ams/amount-of cu/GBP 6) (ams/amount-of cu/GBP 8)))
 
 (deftest test-min
+  (is (= (ams/amount-of cu/USD 10) (ams/min (ams/amount-of cu/USD 10))))
+  (is (= (ams/amount-of cu/GBP 3) (ams/min (ams/amount-of cu/GBP 3))))
   (are [a b c] (is (= c (ams/min a b)))
        (ams/amount-of cu/USD 10) (ams/amount-of cu/USD 20) (ams/amount-of cu/USD 10)
-       (ams/amount-of cu/GBP 30) (ams/amount-of cu/GBP 10) (ams/amount-of cu/GBP 10)))
+       (ams/amount-of cu/GBP 30) (ams/amount-of cu/GBP 10) (ams/amount-of cu/GBP 10))
+  (are [a b c d] (is (= d (ams/min a b c)))
+       (ams/amount-of cu/USD 5) (ams/amount-of cu/USD 20) (ams/amount-of cu/USD 10) (ams/amount-of cu/USD 5)
+       (ams/amount-of cu/GBP 8) (ams/amount-of cu/GBP 10) (ams/amount-of cu/GBP 10) (ams/amount-of cu/GBP 8)))
+
+(deftest test-gt
+  (is (ams/> (ams/amount-of cu/USD 10)))
+  (is (ams/> (ams/amount-of cu/GBP 4)))
+  (is (ams/> (ams/amount-of cu/USD 10) (ams/amount-of cu/USD 8)))
+  (is (ams/> (ams/amount-of cu/GBP 4) (ams/amount-of cu/GBP 2)))
+  (is (not (ams/> (ams/amount-of cu/USD 8) (ams/amount-of cu/USD 8))))
+  (is (ams/> (ams/amount-of cu/USD 8) (ams/amount-of cu/USD 7)))
+  (is (ams/> (ams/amount-of cu/GBP 3) (ams/amount-of cu/GBP 2)))
+  (is (ams/> (ams/amount-of cu/GBP 3) (ams/amount-of cu/GBP 2) (ams/amount-of cu/GBP 1))))
+
+(deftest test-gte
+  (is (ams/>= (ams/amount-of cu/USD 10)))
+  (is (ams/>= (ams/amount-of cu/GBP 4)))
+  (is (ams/>= (ams/amount-of cu/USD 10) (ams/amount-of cu/USD 10)))
+  (is (ams/>= (ams/amount-of cu/USD 10) (ams/amount-of cu/USD 9)))
+  (is (ams/>= (ams/amount-of cu/GBP 4) (ams/amount-of cu/GBP 2)))
+  (is (ams/>= (ams/amount-of cu/USD 8) (ams/amount-of cu/USD 8)))
+  (is (ams/>= (ams/amount-of cu/USD 8) (ams/amount-of cu/USD 7)))
+  (is (ams/>= (ams/amount-of cu/GBP 3) (ams/amount-of cu/GBP 2)))
+  (is (ams/>= (ams/amount-of cu/GBP 3) (ams/amount-of cu/GBP 2) (ams/amount-of cu/GBP 1) (ams/amount-of cu/GBP 1))))
+
+(deftest test-lt
+  (is (ams/< (ams/amount-of cu/USD 10)))
+  (is (ams/< (ams/amount-of cu/GBP 4)))
+  (is (ams/< (ams/amount-of cu/USD 8) (ams/amount-of cu/USD 10)))
+  (is (ams/< (ams/amount-of cu/GBP 1) (ams/amount-of cu/GBP 4)))
+  (is (not (ams/< (ams/amount-of cu/USD 8) (ams/amount-of cu/USD 8))))
+  (is (ams/< (ams/amount-of cu/USD 3) (ams/amount-of cu/USD 4)))
+  (is (ams/< (ams/amount-of cu/GBP 2) (ams/amount-of cu/GBP 4)))
+  (is (ams/< (ams/amount-of cu/GBP 1) (ams/amount-of cu/GBP 2) (ams/amount-of cu/GBP 30))))
+
+(deftest test-lte
+  (is (ams/<= (ams/amount-of cu/USD 10)))
+  (is (ams/<= (ams/amount-of cu/GBP 4)))
+  (is (ams/<= (ams/amount-of cu/USD 8) (ams/amount-of cu/USD 10)))
+  (is (ams/<= (ams/amount-of cu/GBP 1) (ams/amount-of cu/GBP 4)))
+  (is (ams/<= (ams/amount-of cu/USD 8) (ams/amount-of cu/USD 8)))
+  (is (ams/<= (ams/amount-of cu/USD 3) (ams/amount-of cu/USD 4)))
+  (is (ams/<= (ams/amount-of cu/GBP 2) (ams/amount-of cu/GBP 4)))
+  (is (ams/<= (ams/amount-of cu/GBP 1) (ams/amount-of cu/GBP 2) (ams/amount-of cu/GBP 30))))
 
 (deftest test-multiplication
   (let [oa (ams/amount-of cu/USD 100)

@@ -111,6 +111,25 @@ It is possible to add up all monies in a collection or sequence using `clojurewe
 ;= USD 110
 ```
 
+It is possible to compare monetary amounts using >, >=, < and <=.
+
+```clojure
+(require '[clojurewerkz.money.amounts    :as ma])
+(require '[clojurewerkz.money.currencies :as mc])
+
+(ma/< (ma/amount-of mc/USD 100) (ma/amount-of mc/USD 100))
+;= false
+
+(ma/<= (ma/amount-of mc/USD 100) (ma/amount-of mc/USD 100) (ma/amount-of mc/USD 120))
+;= true
+
+(ma/>= (ma/amount-of mc/USD 100) (ma/amount-of mc/USD 100) (ma/amount-of mc/USD 120))
+;= false
+
+(ma/> (ma/amount-of mc/USD 200) (ma/amount-of mc/USD 100))
+;= true
+```
+
 ### Rounding
 
 `clojurewerkz.money.amounts/round` is a function that performs rounding of
@@ -137,7 +156,6 @@ monetary values using one of the rounding modes:
 (ams/round (ams/amount-of cu/USD 45.24) 1 :up)
 ;= USD 45.30
 ```
-
 
 
 ### Currencies
