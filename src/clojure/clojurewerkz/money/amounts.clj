@@ -143,7 +143,7 @@
   ([a b & more]
      (reduce min (min a b) more)))
 
-(defn >
+(defn ^boolean >
   "Returns true if the given money amounts are in monotonically decreasing order,
   otherwise false."
   ([a] a)
@@ -156,7 +156,7 @@
          (> b (first more)))
        false)))
 
-(defn >=
+(defn ^boolean >=
   "Returns true if the given money amounts are in monotonically non-increasing order,
   otherwise false."
   ([a] a)
@@ -169,7 +169,7 @@
          (>= b (first more)))
        false)))
 
-(defn <
+(defn ^boolean <
   "Returns true if the given money amounts are in monotonically decreasing order,
   otherwise false."
   ([a] a)
@@ -182,7 +182,7 @@
          (< b (first more)))
        false)))
 
-(defn <=
+(defn ^boolean <=
   "Returns true if the given money amounts are in monotonically non-decreasing order,
   otherwise false."
   ([a] a)
