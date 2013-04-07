@@ -1,7 +1,22 @@
 ## Changes between 1.0.0 and 1.1.0
 
-No changes yet.
+It is possible to compare monetary amounts using >, >=, < and <=.
 
+```clojure
+(require '[clojurewerkz.money.amounts    :as ma])
+(require '[clojurewerkz.money.currencies :as mc])
+
+(ma/< (ma/amount-of mc/USD 100) (ma/amount-of mc/USD 100))
+;= false
+
+(ma/<= (ma/amount-of mc/USD 100) (ma/amount-of mc/USD 100) (ma/amount-of mc/USD 120))
+;= true
+
+(ma/>= (ma/amount-of mc/USD 100) (ma/amount-of mc/USD 100) (ma/amount-of mc/USD 120))
+;= false
+
+(ma/> (ma/amount-of mc/USD 200) (ma/amount-of mc/USD 100))
+;= true
 
 
 ## Changes between 1.0.0-beta2 and 1.0.0
