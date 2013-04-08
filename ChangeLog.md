@@ -17,6 +17,7 @@ It is possible to compare monetary amounts using >, >=, < and <=.
 
 (ma/> (ma/amount-of mc/USD 200) (ma/amount-of mc/USD 100))
 ;= true
+```
 
 
 ## Changes between 1.0.0-beta2 and 1.0.0
