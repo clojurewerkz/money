@@ -61,6 +61,21 @@
     cu))
 
 
+(defn ^java.util.List registered-currencies
+  "Returns a list of registered currency units"
+  []
+  (CurrencyUnit/registeredCurrencies))
+
+(defn ^CurrencyUnit register-currency
+  "Registers a currency"
+  ([^String code]
+     (register-currency code -1 -1 []))
+  ([^String code numeric-code]
+     (register-currency code numeric-code -1 []))
+  ([^String code numeric-code decimal-places]
+     (register-currency code numeric-code decimal-places []))
+  ([^String code numeric-code decimal-places country-codes]
+     (CurrencyUnit/registerCurrency code numeric-code decimal-places country-codes)))
 
 
 (defmacro defalias
