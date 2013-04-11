@@ -29,3 +29,6 @@
 (deftest test-pseudo-currency
   (is (cu/pseudo-currency? (cu/of "XXX")))
   (is (not (cu/pseudo-currency? (cu/of "JPY")))))
+
+(deftest test-additional-currencies-provided-by-clojurewerkz-money
+  (is (cu/pseudo-currency? (cu/of "BTC"))))

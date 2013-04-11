@@ -1,3 +1,11 @@
+## Changes between 1.1.0 and 1.2.0
+
+ClojureWerkz Money now provides a list of additional currencies
+on top of the default Joda Money currency provider. Right now
+the only additional currency is BTC (Bitcoin).
+
+
+
 ## Changes between 1.0.0 and 1.1.0
 
 It is possible to compare monetary amounts using >, >=, < and <=.
