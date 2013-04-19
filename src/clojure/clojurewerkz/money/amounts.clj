@@ -61,7 +61,7 @@
 
 (defn ^Money plus
   "Adds two monetary amounts together"
-  [^Money money ^double other]
+  [^Money money other]
   (.plus money other))
 
 (defn ^Money plus-major
@@ -79,7 +79,7 @@
 (defn ^Money minus
   "Subtracts one monetary amount from another, taking one of them in
    major units (e.g. dollars)"
-  [^Money money ^double other]
+  [^Money money other]
   (.minus money other))
 
 (defn ^Money minus-major
