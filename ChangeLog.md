@@ -1,3 +1,13 @@
+## Changes between 1.2.0 and 1.3.0
+
+### Addition and Subtraction of Monetary Amounts
+
+`clojurewerkz.money.amounts/plus` and `clojurewerkz.money.amounts/minus` now accept
+monetary amounts as well as doubles as 2nd argument.
+
+Contributed by Ryan Neufeld.
+
+
 ## Changes between 1.1.0 and 1.2.0
 
 ClojureWerkz Money now provides a list of additional currencies
