@@ -119,7 +119,7 @@
        "JPY -323.00" (ams/of-minor CurrencyUnit/JPY -323)
        "GBP -33.78"  (ams/of-minor CurrencyUnit/GBP -3378)))
 
-(deftest test-addition-of-two-monetary-values
+(deftest test-addition-of-monetary-values
   (let [cu CurrencyUnit/EUR
         a  (ams/amount-of cu 15.00)
         b  10.00M
@@ -127,10 +127,13 @@
         d  0.00M
         ^Money t1  (ams/plus a b)
         ^Money t2  (ams/plus c d)]
+
     (is (= (.getCurrencyUnit t1) cu))
     (is (= (.getCurrencyUnit t2) cu))
     (is (= 25.00M (.getAmount t1)))
-    (is (= 13.00M (.getAmount t2)))))
+    (is (= 13.00M (.getAmount t2)))
+    (is (= 38.00M (.getAmount (ams/plus t1 t2))) "add two Money values together")
+    (is (= 39.00M (.getAmount (ams/plus t2 [t2 t2]))) "add a collection of Money values")))
 
 (deftest test-addition-with-major-units
   (let [cu CurrencyUnit/EUR
@@ -158,7 +161,7 @@
     (is (= 25.00M (.getAmount t1)))
     (is (= 13.00M (.getAmount t2)))))
 
-(deftest test-substraction-of-two-monetary-values
+(deftest test-substraction-of-monetary-values
   (let [cu CurrencyUnit/EUR
         a  (ams/amount-of cu 15.00)
         b  10.00M
@@ -169,7 +172,9 @@
     (is (= (.getCurrencyUnit t1) cu))
     (is (= (.getCurrencyUnit t2) cu))
     (is (= 5.00M  (.getAmount t1)))
-    (is (= 13.00M (.getAmount t2)))))
+    (is (= 13.00M (.getAmount t2)))
+    (is (= 8.00M (.getAmount (ams/minus t2 t1))) "subtract one Money value from another")
+    (is (= 3.00M (.getAmount (ams/minus t2 [t1 t1]))) "subtract multiple Money values from another")))
 
 (deftest test-substraction-with-major-units
   (let [cu CurrencyUnit/EUR
