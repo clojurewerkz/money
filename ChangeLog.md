@@ -1,5 +1,12 @@
 ## Changes between 1.2.0 and 1.3.0
 
+### Hiccup Integration
+
+`clojurewerkz.money.hiccup`, when compiled, will extend Hiccup's HTML
+rendering protocol for monetary amounts and currency units. Internally
+it uses default formatter used by `clojurewerkz.money.format`:
+`clojurewerkz.money.format/*default-formatter*`, which can be rebound.
+
 ### Formatting of Monetary Amounts
 
 `clojurewerkz.money.format/format` is a new function that formats
