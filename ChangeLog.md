@@ -1,5 +1,26 @@
 ## Changes between 1.2.0 and 1.3.0
 
+### Formatting of Monetary Amounts
+
+`clojurewerkz.money.format/format` is a new function that formats
+monetary amounts using default or provided locale:
+
+``` clojure
+(require '[clojurewerkz.money.currencies :as cu)
+(require '[clojurewerkz.money.amounts :refer [amount-of])
+(require '[clojurewerkz.money.format :refer :all])
+
+(import java.util.Locale)
+
+;; format using default system locale
+(format (amount-of cu/GBP 20.0) Locale/UK) ;= GBP20,00
+;; format using UK locale
+(format (amount-of cu/GBP 20.0) Locale/UK) ;= £10.00
+```
+
+Custom Joda Money formatters are also supported.
+
+
 ### Addition and Subtraction of Monetary Amounts
 
 `clojurewerkz.money.amounts/plus` and `clojurewerkz.money.amounts/minus` now accept
