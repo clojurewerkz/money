@@ -199,15 +199,37 @@ to another using provided exchange rate and rounding mode:
 ```
 
 
+### Formatting
+
+Money supports formatting of monetary amounts with the `clojurewerkz.money.format/format` function
+which takes an amount and (optionally) a locale and a formatter:
+
+``` clojure
+(require '[clojurewerkz.money.currencies :as cu)
+(require '[clojurewerkz.money.amounts :refer [amount-of])
+(require '[clojurewerkz.money.format :refer :all])
+
+(import java.util.Locale)
+
+;; format using default system locale
+(format (amount-of cu/GBP 20.0) Locale/UK) ;= GBP20,00
+;; format using UK locale
+(format (amount-of cu/GBP 20.0) Locale/UK) ;= £10.00
+```
+
+Default formatter uses localized currency symbol and amount and default locale which JVM infers from environment
+settings.
+
+
 ### Cheshire Integration
 
 `clojurewerkz.money.json`, when loaded, registers serializers for
 `org.joda.money.Money` and `org.joda.money.CurrencyUnit` with
-Cheshire.  Serialization conventions used are straightforward and
+Cheshire. Serialization conventions used are straightforward and
 produce human readable values:
 
  * `(clojurewerkz.money.currencies/USD)` => `"USD"`
- * `(clojurewerkz.money.amounts/amount-of (clojurewerkz.money.currencies/USD) 20.5)` => `"USD 20.50"`
+ * `(clojurewerkz.money.amounts/amount-of (clojurewerkz.money.currencies/USD) 20.5)` => `"USD20.50"` (will use system locale by default)
 
 To use it, simply require the namespace and then use Cheshire
 generation functions as usual.
@@ -231,6 +253,20 @@ maps because there is no way to tell them from regular BSON
 documents. `clojurewerkz.money.monger/from-stored-map` can be used to
 produce `Money` instances from maps following the serialization
 convention described above.
+
+
+### Hiccup Integration
+
+`clojurewerkz.money.hiccup`, when loaded, extends [Hiccup]() HTML rendering protocol to render
+monetary amounts and currency units.
+Rendering conventions used are straightforward and
+produce human readable values:
+
+ * `(clojurewerkz.money.currencies/USD)` => `"USD"`
+ * `(clojurewerkz.money.amounts/amount-of (clojurewerkz.money.currencies/USD) 20.5)` => `"USD20.50"` (will use system locale by default)
+
+To use it, simply require the namespace and then use Hiccup
+as usual.
 
 
 ## Community
