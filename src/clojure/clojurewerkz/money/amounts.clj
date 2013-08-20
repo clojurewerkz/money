@@ -94,9 +94,17 @@
   (.minusMinor money amount))
 
 (defn ^Money multiply
-  "Multiples monetary amount by the given number"
-  [^Money money ^double multiplier]
-  (.multipliedBy money multiplier))
+  "Multiplies monetary amount by the given number. Takes an optional arounding
+   mode which is one of:
+
+   * java.math.RoundingMode instances
+   * :floor, :ceiling, :up, :down, :half-up, :half-down, :hald-even that correspond to
+     java.math.RoundingMode constants with the same names
+   * nil for no rounding"
+  ([^Money money ^double multiplier]
+     (.multipliedBy money multiplier (cnv/to-rounding-mode nil)))
+  ([^Money money ^double multiplier rounding-mode]
+     (.multipliedBy money multiplier (cnv/to-rounding-mode rounding-mode))))
 
 (defn ^Money divide
   "Divides monetary amount by the given number. Takes an optional arounding

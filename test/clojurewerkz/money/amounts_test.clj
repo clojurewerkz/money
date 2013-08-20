@@ -286,6 +286,11 @@
         ma (ams/multiply oa 2)]
     (is (= ma (ams/amount-of cu/USD 200)))))
 
+(deftest test-multiplication-with-floor-rounding-mode
+  (let [oa (ams/amount-of cu/USD 45)
+        ma (ams/multiply oa 10.1 :floor)]
+    (is (= ma (ams/amount-of cu/USD 454.50)))))
+
 (deftest test-division
   (let [oa (ams/amount-of cu/USD 100)
         ma (ams/divide oa 2)]
