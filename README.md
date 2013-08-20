@@ -34,7 +34,7 @@ definition to your `pom.xml`:
 
 With Leiningen:
 
-    [clojurewerkz/money "1.3.0"]
+    [clojurewerkz/money "1.4.0"]
 
 
 With Maven:
@@ -42,7 +42,7 @@ With Maven:
     <dependency>
       <groupId>clojurewerkz</groupId>
       <artifactId>money</artifactId>
-      <version>1.3.0</version>
+      <version>1.4.0</version>
     </dependency>
 
 
