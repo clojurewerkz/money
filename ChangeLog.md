@@ -1,3 +1,17 @@
+## Changes between 1.3.0 and 1.4.0
+
+### Roudning Multiplication
+
+`clojuremowerkz.money.amount/multiply` now provides another
+arity that allows for multiplication by a double, just like
+with `divide`:
+
+``` clojure
+(ams/multiply (ams/amount-of cu/USD 45) 10.1 :floor)
+;= USD 454.50
+```
+
+
 ## Changes between 1.2.0 and 1.3.0
 
 ### Hiccup Integration
