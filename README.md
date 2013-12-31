@@ -303,6 +303,6 @@ a pull request on GitHub.
 
 ## License
 
-Copyright © 2012-2013 Michael S. Klishin, Alex Petrov
+Copyright © 2012-2014 Michael S. Klishin, Alex Petrov
 
 Distributed under the Eclipse Public License, the same as Clojure.
