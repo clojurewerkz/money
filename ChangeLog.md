@@ -1,3 +1,12 @@
+## Changes between 1.4.0 and 1.5.0
+
+### Comparison Function Correctness
+
+`<`, `>`, `<=`, `>=` now return a boolean on the 1-arg arity, as per docstring.
+
+Contributed by Nicola Mometto.
+
+
 ## Changes between 1.3.0 and 1.4.0
 
 ### Roudning Multiplication
