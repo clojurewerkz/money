@@ -23,4 +23,4 @@
   :source-paths      ["src/clojure"]
   :java-source-paths ["src/java"]
   :resource-paths    ["src/resources"]
-  :warn-on-reflection true)
+  :global-vars {*warn-on-reflection* true})
