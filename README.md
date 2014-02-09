@@ -217,7 +217,7 @@ which takes an amount and (optionally) a locale and a formatter:
 (format (amount-of cu/GBP 20.0) Locale/UK) ;= £10.00
 
 ;; format using Brazilian locale
-(mf/format (amount-of cu/BRL 20.0) (Locale. "pt" "BR")) ;= R$20,00
+(format (amount-of cu/BRL 20.0) (Locale. "pt" "BR")) ;= R$20,00
 ```
 
 Default formatter uses localized currency symbol and amount and default locale which JVM infers from environment
