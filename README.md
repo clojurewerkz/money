@@ -205,21 +205,23 @@ Money supports formatting of monetary amounts with the `clojurewerkz.money.forma
 which takes an amount and (optionally) a locale and a formatter:
 
 ``` clojure
-(require '[clojurewerkz.money.currencies :as cu)
-(require '[clojurewerkz.money.amounts :refer [amount-of])
+(require '[clojurewerkz.money.currencies :as cu])
+(require '[clojurewerkz.money.amounts :refer [amount-of]])
 (require '[clojurewerkz.money.format :refer :all])
 
 (import java.util.Locale)
 
 ;; format using default system locale
-(format (amount-of cu/GBP 20.0) Locale/UK) ;= GBP20,00
+(format (amount-of cu/GBP 20.0)) ;= GBP20,00
 ;; format using UK locale
 (format (amount-of cu/GBP 20.0) Locale/UK) ;= £10.00
+
+;; format using Brazilian locale
+(format (amount-of cu/BRL 20.0) (Locale. "pt" "BR")) ;= R$20,00
 ```
 
 Default formatter uses localized currency symbol and amount and default locale which JVM infers from environment
 settings.
-
 
 ### Cheshire Integration
 
