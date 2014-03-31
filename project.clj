@@ -8,7 +8,7 @@
                  [org.joda/joda-money "0.8"]]
   :profiles {:dev {:plugins      [[codox "0.6.6"]]
                    :dependencies [[com.novemberain/monger "1.7.0"]
-                                  [cheshire               "5.1.1"]
+                                  [cheshire               "5.3.1"]
                                   [hiccup                 "1.0.3"]]}
              :1.4 {:dependencies [[org.clojure/clojure "1.4.0"]]}
              :1.6 {:dependencies [[org.clojure/clojure "1.6.0"]]}
