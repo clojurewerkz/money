@@ -1,3 +1,11 @@
+## Changes between 1.6.0 and 1.7.0
+
+### Joda Money 0.9
+
+Joda Money was upgraded to 0.9.1.
+
+
+
 ## Changes between 1.5.0 and 1.6.0
 
 ### Clojure 1.6 By Default
