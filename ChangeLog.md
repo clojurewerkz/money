@@ -1,8 +1,8 @@
 ## Changes between 1.6.0 and 1.7.0
 
-### Joda Money 0.9
+### Joda Money 0.10
 
-Joda Money was upgraded to 0.9.1.
+Joda Money was upgraded to 0.10.0.
 
 
 
