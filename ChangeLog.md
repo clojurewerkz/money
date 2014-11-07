@@ -3,7 +3,7 @@
 ### ZMK Currency Removed
 
 In accordance with a Joda Money `0.10.0` change, ZMK is no longer
-on the list of known currencies.
+on the list of known currencies (use ZMW instead).
 
 ### Joda Money 0.10
 
