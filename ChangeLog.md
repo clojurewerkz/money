@@ -1,5 +1,10 @@
 ## Changes between 1.6.0 and 1.7.0
 
+### ZMK Currency Removed
+
+In accordance with a Joda Money `0.10.0` change, ZMK is no longer
+on the list of known currencies.
+
 ### Joda Money 0.10
 
 Joda Money was upgraded to 0.10.0.
