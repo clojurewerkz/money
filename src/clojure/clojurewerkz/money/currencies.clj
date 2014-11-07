@@ -249,5 +249,4 @@
 (defalias "XXX")
 (defalias "YER")
 (defalias "ZAR")
-(defalias "ZMK")
 (defalias "ZWL")
