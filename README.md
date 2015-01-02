@@ -14,7 +14,7 @@ It is built on top of [Joda Money](http://joda-money.sourceforge.net/).
 
 ## Project Maturity
 
-Money has reached `1.0` and is considered to be a complete, stable library.
+Money is past `1.0` and is considered to be a complete, stable library.
 
 
 
