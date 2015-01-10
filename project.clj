@@ -1,6 +1,6 @@
 (defproject clojurewerkz/money "1.8.0-SNAPSHOT"
   :description "A Clojure library that deals with monetary values and currencies. Built on top of Joda Money."
-  :min-lein-version "2.5.0"
+  :min-lein-version "2.5.1"
   :url "http://github.com/clojurewerkz/money"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
