@@ -336,7 +336,13 @@
         (is (= ma (ams/amount-of cu/USD 45.30)))))))
 
 (deftest test-convert-to
-  (let [a    (ams/amount-of cu/USD 99.98)
-        b    (ams/amount-of cu/GBP 65.65)
-        rate 1.523]
-    (is (= a (ams/convert-to b cu/USD rate :down)))))
+  (testing "with Double rate"
+    (let [a    (ams/amount-of cu/USD 99.98)
+          b    (ams/amount-of cu/GBP 65.65)
+          rate 1.523]
+      (is (= a (ams/convert-to b cu/USD rate :down)))))
+  (testing "with BigDecimal rate"
+    (let [a    (ams/amount-of cu/USD 99.98)
+          b    (ams/amount-of cu/GBP 65.65)
+          rate 1.523M]
+      (is (= a (ams/convert-to b cu/USD rate :down))))))

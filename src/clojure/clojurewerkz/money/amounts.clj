@@ -12,7 +12,7 @@
   (:refer-clojure :exclude [zero? max min > >= < <=])
   (:require [clojurewerkz.money.conversion :as cnv])
   (:import [org.joda.money Money BigMoney CurrencyUnit MoneyUtils]
-           [java.math RoundingMode BigDecimal]))
+           [java.math RoundingMode]))
 
 ;;
 ;; API
@@ -239,4 +239,4 @@
      java.math.RoundingMode constants with the same names
    * nil for no rounding"
   [^Money money ^CurrencyUnit currency multiplier rounding-mode]
-  (.convertedTo money currency (BigDecimal/valueOf multiplier) (cnv/to-rounding-mode rounding-mode)))
+  (.convertedTo money currency (bigdec multiplier) (cnv/to-rounding-mode rounding-mode)))
