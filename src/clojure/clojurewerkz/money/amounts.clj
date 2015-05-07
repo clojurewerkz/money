@@ -107,7 +107,7 @@
    mode which is one of:
 
    * java.math.RoundingMode instances
-   * :floor, :ceiling, :up, :down, :half-up, :half-down, :hald-even that correspond to
+   * :floor, :ceiling, :up, :down, :half-up, :half-down, :half-even that correspond to
      java.math.RoundingMode constants with the same names
    * nil for no rounding"
   ([^Money money ^double multiplier]
@@ -120,7 +120,7 @@
    mode which is one of:
 
    * java.math.RoundingMode instances
-   * :floor, :ceiling, :up, :down, :half-up, :half-down, :hald-even that correspond to
+   * :floor, :ceiling, :up, :down, :half-up, :half-down, :half-even that correspond to
      java.math.RoundingMode constants with the same names
    * nil for no rounding"
   ([^Money money ^double multiplier]
@@ -220,7 +220,7 @@
    Rounding mode should be one of:
 
    * java.math.RoundingMode instances
-   * :floor, :ceiling, :up, :down, :half-up, :half-down, :hald-even that correspond to
+   * :floor, :ceiling, :up, :down, :half-up, :half-down, :half-even that correspond to
      java.math.RoundingMode constants with the same names
    * nil for no rounding"
   [^Money money ^long scale rounding-mode]
@@ -235,7 +235,7 @@
    Rounding mode should be one of:
 
    * java.math.RoundingMode instances
-   * :floor, :ceiling, :up, :down, :half-up, :half-down, :hald-even that correspond to
+   * :floor, :ceiling, :up, :down, :half-up, :half-down, :half-even that correspond to
      java.math.RoundingMode constants with the same names
    * nil for no rounding"
   [^Money money ^CurrencyUnit currency multiplier rounding-mode]
