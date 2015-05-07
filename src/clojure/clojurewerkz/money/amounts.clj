@@ -230,7 +230,7 @@
   "Converts monetary amount in one currency to monetary amount in a different
    currency using the provided multiplier (exchange rate) and rounding mode.
 
-   Multipler should be either a java.math.BigDecimal or a double.
+   Multiplier should be either a java.math.BigDecimal or a double.
 
    Rounding mode should be one of:
 
