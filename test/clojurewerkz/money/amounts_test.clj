@@ -302,41 +302,47 @@
     (is (= ma (ams/amount-of cu/USD 50)))))
 
 (deftest test-round
-  (testing "with scale -1 and flooring rouding mode"
+  (testing "with scale -1 and flooring rounding mode"
     (let [oa (ams/amount-of cu/USD 40.01)
           ma (ams/round oa -1 :floor)]
       (is (= ma (ams/amount-of cu/USD 40))))
-    (testing "with scale -1 and up rouding mode"
+    (testing "with scale -1 and up rounding mode"
       (let [oa (ams/amount-of cu/USD 40.01)
             ma (ams/round oa -1 :up)]
         (is (= ma (ams/amount-of cu/USD 50)))))
-    (testing "with scale 0 and flooring rouding mode"
+    (testing "with scale 0 and flooring rounding mode"
       (let [oa (ams/amount-of cu/USD 45.24)
             ma (ams/round oa 0 :floor)]
         (is (= ma (ams/amount-of cu/USD 45)))))
-    (testing "with scale 0 and up rouding mode"
+    (testing "with scale 0 and up rounding mode"
       (let [oa (ams/amount-of cu/USD 45.24)
             ma (ams/round oa 0 :up)]
         (is (= ma (ams/amount-of cu/USD 46)))))
-    (testing "with scale 1 and flooring rouding mode"
+    (testing "with scale 1 and flooring rounding mode"
       (let [oa (ams/amount-of cu/USD 45.24)
             ma (ams/round oa 1 :floor)]
         (is (= ma (ams/amount-of cu/USD 45.20)))))
-    (testing "with scale 1 and up rouding mode"
+    (testing "with scale 1 and up rounding mode"
       (let [oa (ams/amount-of cu/USD 45.24)
             ma (ams/round oa 1 :up)]
         (is (= ma (ams/amount-of cu/USD 45.30)))))
-    (testing "with scale 2 and flooring rouding mode"
+    (testing "with scale 2 and flooring rounding mode"
       (let [oa (ams/amount-of cu/USD 45.24)
             ma (ams/round oa 2 :floor)]
         (is (= ma (ams/amount-of cu/USD 45.24)))))
-    (testing "with scale 2 and up rouding mode"
+    (testing "with scale 2 and up rounding mode"
       (let [oa (ams/amount-of cu/USD 45.24)
             ma (ams/round oa 1 :up)]
         (is (= ma (ams/amount-of cu/USD 45.30)))))))
 
 (deftest test-convert-to
-  (let [a    (ams/amount-of cu/USD 99.98)
-        b    (ams/amount-of cu/GBP 65.65)
-        rate 1.523]
-    (is (= a (ams/convert-to b cu/USD rate :down)))))
+  (testing "with Double rate"
+    (let [a    (ams/amount-of cu/USD 99.98)
+          b    (ams/amount-of cu/GBP 65.65)
+          rate 1.523]
+      (is (= a (ams/convert-to b cu/USD rate :down)))))
+  (testing "with BigDecimal rate"
+    (let [a    (ams/amount-of cu/USD 99.98)
+          b    (ams/amount-of cu/GBP 65.65)
+          rate 1.523M]
+      (is (= a (ams/convert-to b cu/USD rate :down))))))

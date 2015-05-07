@@ -12,7 +12,7 @@
   (:refer-clojure :exclude [zero? max min > >= < <=])
   (:require [clojurewerkz.money.conversion :as cnv])
   (:import [org.joda.money Money BigMoney CurrencyUnit MoneyUtils]
-           [java.math RoundingMode BigDecimal]))
+           [java.math RoundingMode]))
 
 ;;
 ;; API
@@ -107,7 +107,7 @@
    mode which is one of:
 
    * java.math.RoundingMode instances
-   * :floor, :ceiling, :up, :down, :half-up, :half-down, :hald-even that correspond to
+   * :floor, :ceiling, :up, :down, :half-up, :half-down, :half-even that correspond to
      java.math.RoundingMode constants with the same names
    * nil for no rounding"
   ([^Money money ^double multiplier]
@@ -120,7 +120,7 @@
    mode which is one of:
 
    * java.math.RoundingMode instances
-   * :floor, :ceiling, :up, :down, :half-up, :half-down, :hald-even that correspond to
+   * :floor, :ceiling, :up, :down, :half-up, :half-down, :half-even that correspond to
      java.math.RoundingMode constants with the same names
    * nil for no rounding"
   ([^Money money ^double multiplier]
@@ -220,7 +220,7 @@
    Rounding mode should be one of:
 
    * java.math.RoundingMode instances
-   * :floor, :ceiling, :up, :down, :half-up, :half-down, :hald-even that correspond to
+   * :floor, :ceiling, :up, :down, :half-up, :half-down, :half-even that correspond to
      java.math.RoundingMode constants with the same names
    * nil for no rounding"
   [^Money money ^long scale rounding-mode]
@@ -230,13 +230,13 @@
   "Converts monetary amount in one currency to monetary amount in a different
    currency using the provided multiplier (exchange rate) and rounding mode.
 
-   Multipler should be either a java.math.BigDecimal or a double.
+   Multiplier should be either a java.math.BigDecimal or a double.
 
    Rounding mode should be one of:
 
    * java.math.RoundingMode instances
-   * :floor, :ceiling, :up, :down, :half-up, :half-down, :hald-even that correspond to
+   * :floor, :ceiling, :up, :down, :half-up, :half-down, :half-even that correspond to
      java.math.RoundingMode constants with the same names
    * nil for no rounding"
   [^Money money ^CurrencyUnit currency multiplier rounding-mode]
-  (.convertedTo money currency (BigDecimal/valueOf multiplier) (cnv/to-rounding-mode rounding-mode)))
+  (.convertedTo money currency (bigdec multiplier) (cnv/to-rounding-mode rounding-mode)))
