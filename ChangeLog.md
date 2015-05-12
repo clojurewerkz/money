@@ -1,3 +1,12 @@
+## Changes between 1.7.0 and 1.8.0
+
+### Conversion Supports BigDecimals
+
+`clojurewerkz.money.amounts/convert-to` now accepts `BigDecimal`s.
+
+Contributed by TJ Gabbour.
+
+
 ## Changes between 1.6.0 and 1.7.0
 
 ### ZMK Currency Removed
