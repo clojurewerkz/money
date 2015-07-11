@@ -6,3 +6,4 @@ pom.xml*
 TAGS
 checkouts/*
 target/*
+.nrepl*
