@@ -43,19 +43,40 @@
 ;;
 
 (defn ^Money amount-of
+  "Instantiates a monetary amount of given currency unit and amount as double.
+   N.B. this function should not be used for currencies without minor units (e.g. JPY)."
   ([^CurrencyUnit unit ^double amount]
      (Money/of unit amount))
   ([^CurrencyUnit unit ^double amount ^RoundingMode rm]
      (Money/of unit amount rm)))
 
 (defn ^Money of-major
+  "Instantiates a monetary amount of given currency unit and major unit amount.
+   This function should be used for currencies without minor units (e.g. JPY)."
   [^CurrencyUnit unit ^long amount]
   (Money/ofMajor unit amount))
 
-
 (defn ^Money of-minor
+  "Instantiates a monetary amount of given currency unit and minor unit amount.
+   This function can be used for currencies without minor units (e.g. JPY),
+   in which case it's going to work just as of-major."
   [^CurrencyUnit unit ^long amount]
   (Money/ofMinor unit amount))
+
+(defn ^long major-of
+  "Returns the amount in major units as a long"
+  [^Money money]
+  (.getAmountMajorLong money))
+
+(defn ^long minor-of
+  "Returns the amount in minor units as a long"
+  [^Money money]
+  (.getAmountMinorLong money))
+
+(defn ^CurrencyUnit currency-of
+  "Returns the currency of a monetary amount"
+  [^Money money]
+  (.getCurrencyUnit money))
 
 (defn ^Money zero
   "Returns zero monetary amount for the given currency unit"

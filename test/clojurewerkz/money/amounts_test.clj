@@ -31,11 +31,28 @@
 
 (deftest test-amount-of-with-currency-unit-and-amount-in-minor-units
   (are [cu amount bdec] (let [^Money money (ams/of-minor cu amount)]
-                          (is (= (.getCurrencyUnit money) cu))
+                          (is (= (ams/currency-of money) cu))
                           (is (= bdec (.getAmount money))))
        CurrencyUnit/USD 2595 25.95M
        CurrencyUnit/GBP 4012 40.12M
        CurrencyUnit/JPY 5000 5000M))
+
+(deftest test-major-units-of
+  (are [cu amount expected] (let [^Money money (ams/of-minor cu amount)]
+                              (is (= (ams/currency-of money) cu))
+                              (is (= expected (ams/major-of money))))
+       CurrencyUnit/USD    2595 25
+       CurrencyUnit/GBP    4012 40
+       (cu/for-code "VND") 401  401
+       CurrencyUnit/JPY    5000 5000))
+
+(deftest test-minor-units-of
+  (are [cu amount expected] (let [^Money money (ams/of-minor cu amount)]
+                              (is (= (ams/currency-of money) cu))
+                              (is (= expected (ams/minor-of money))))
+       CurrencyUnit/USD    2595 2595
+       (cu/for-code "VND") 401  401
+       CurrencyUnit/JPY    5000 5000))
 
 
 (deftest test-zero-amount
