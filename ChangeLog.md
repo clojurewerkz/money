@@ -7,6 +7,15 @@ and `clojurewerkz.money.amounts/currency-of` return major units (e.g. dollars,
 minor units (e.g. cents), and currency unit from a provided monetary amount
 (`Money` instance).
 
+### Clojure 1.7 By Default
+
+The project now depends on `org.clojure/clojure` version `1.7.0`. It is
+still compatible with Clojure 1.6 and if your `project.clj` depends on
+a different version, it will be used, but 1.7 is the default now.
+
+We encourage all users to upgrade to 1.7, it is a drop-in replacement
+for the majority of projects out there.
+
 
 ## Changes between 1.7.0 and 1.8.0
 
