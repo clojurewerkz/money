@@ -1,3 +1,13 @@
+## Changes Between 1.8.0 and 1.9.0
+
+### New Amount Functions
+
+`clojurewerkz.money.amounts/major-of`, `clojurewerkz.money.amounts/minor-of`,
+and `clojurewerkz.money.amounts/currency-of` return major units (e.g. dollars,
+minor units (e.g. cents), and currency unit from a provided monetary amount
+(`Money` instance).
+
+
 ## Changes between 1.7.0 and 1.8.0
 
 ### Conversion Supports BigDecimals
