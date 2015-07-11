@@ -53,6 +53,8 @@ With Maven:
 Monetary amounts are instantiated using `clojurewerkz.money.amounts` functions. They operate on
 floating point amounts (doubles) or long values in major units (e.g. dollars) or minor units (e.g. cents).
 
+Note that some currencies do not have minor units (most notably `JPY`). For those, use `clojurewerkz.money.amounts/of-major`.
+
 ``` clojure
 (require '[clojurewerkz.money.amounts :as ma])
 (require '[clojurewerkz.money.currencies :as mc])
