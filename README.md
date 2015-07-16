@@ -216,7 +216,7 @@ which takes an amount and (optionally) a locale and a formatter:
 ;; format using default system locale
 (format (amount-of cu/GBP 20.0)) ;= GBP20,00
 ;; format using UK locale
-(format (amount-of cu/GBP 20.0) Locale/UK) ;= £10.00
+(format (amount-of cu/GBP 20.0) Locale/UK) ;= £20.00
 
 ;; format using Brazilian locale
 (format (amount-of cu/BRL 20.0) (Locale. "pt" "BR")) ;= R$20,00
