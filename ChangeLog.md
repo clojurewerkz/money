@@ -1,3 +1,14 @@
+## Changes Between 1.9.0 and 1.9.1
+
+### Fix Primitive Return Type Hints
+
+`clojurewerkz.money.amounts/major-of` and `clojurewerkz.money.amounts/minor-of`
+had incorrect primitive return type hints, which have been fixed.
+
+See [#14](https://github.com/clojurewerkz/money/pull/14)
+
+Contributed by [Gordon Stratton](https://github.com/gws)
+
 ## Changes Between 1.8.0 and 1.9.0
 
 ### New Amount Functions
