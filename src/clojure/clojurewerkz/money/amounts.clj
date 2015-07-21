@@ -63,12 +63,12 @@
   [^CurrencyUnit unit ^long amount]
   (Money/ofMinor unit amount))
 
-(defn ^long major-of
+(defn ^{:tag 'long} major-of
   "Returns the amount in major units as a long"
   [^Money money]
   (.getAmountMajorLong money))
 
-(defn ^long minor-of
+(defn ^{:tag 'long} minor-of
   "Returns the amount in minor units as a long"
   [^Money money]
   (.getAmountMinorLong money))
