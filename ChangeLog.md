@@ -1,4 +1,4 @@
-## Changes Between 1.9.0 and 1.9.1
+## Changes Between 1.9.0 and 1.10.0
 
 ### Fix Primitive Return Type Hints
 
