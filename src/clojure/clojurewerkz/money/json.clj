@@ -39,10 +39,17 @@
 
    Currency units are serialized to strings by taking their ISO-4217 codes."
   (:require cheshire.generate
+            [clojurewerkz.money.amounts :as ma]
             [clojurewerkz.money.format :as fmt])
   (:import [org.joda.money Money CurrencyUnit]
            [com.fasterxml.jackson.core.json WriterBasedJsonGenerator]))
 
+(defn- encode-money
+  "Encodes an instance of org.joda.money.Money as a string with an ISO-4217
+  currency code followed by a human-readable amount."
+  ^String
+  [^Money m]
+  (format "%s %s" (.getCode (ma/currency-of m)) (.getAmount m)))
 
 (cheshire.generate/add-encoder CurrencyUnit
                                (fn [^CurrencyUnit cu ^WriterBasedJsonGenerator generator]
@@ -50,4 +57,4 @@
 
 (cheshire.generate/add-encoder Money
                                (fn [^Money m ^WriterBasedJsonGenerator generator]
-                                 (.writeString generator (fmt/format m))))
+                                 (.writeString generator (encode-money m))))
