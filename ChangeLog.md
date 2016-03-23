@@ -1,5 +1,20 @@
 ## Changes Between 1.9.0 and 1.10.0
 
+### Fix JSON serialization format
+
+`clojurewerkz.money.json` previously used a Cheshire encoder that serialized a
+`Money` object to a locale-dependent amount which could not be parsed by
+`clojurewerkz.money.amounts/parse`, and did not agree with the `c.m.j` namespace
+documentation. It has been updated to produce a `[CODE] [AMOUNT]` string which
+can be parsed by `clojurewerkz.money.amounts/parse`.
+
+References:
+
+* [Reported in #9](https://github.com/clojurewerkz/money/issues/9)
+* [Fixed in #18](https://github.com/clojurewerkz/money/pull/18)
+
+Contributed by [Gordon Stratton](https://github.com/gws)
+
 ### Fix Primitive Return Type Hints
 
 `clojurewerkz.money.amounts/major-of` and `clojurewerkz.money.amounts/minor-of`
