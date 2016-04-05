@@ -113,10 +113,51 @@
   [^Iterable monies]
   (Money/total monies))
 
+(defprotocol AmountOps
+  (op-plus [other money rounding-mode])
+  (op-minus [other money rounding-mode])
+  (op-multiply [multiplier money rounding-mode])
+  (op-divide [multiplier money rounding-mode]))
+
+(extend-protocol AmountOps
+  Double
+  (op-plus [other ^Money money ^RoundingMode rounding-mode]
+    (.plus money other rounding-mode))
+  (op-minus [ other ^Money money ^RoundingMode rounding-mode]
+    (.minus money other rounding-mode))
+  (op-multiply [ multiplier ^Money money ^RoundingMode rounding-mode]
+    (.multipliedBy money multiplier rounding-mode))
+  (op-divide [multiplier ^Money money ^RoundingMode rounding-mode]
+    (.dividedBy money multiplier rounding-mode))
+  java.math.BigDecimal
+  (op-plus [other ^Money money ^RoundingMode rounding-mode]
+    (.plus money other rounding-mode))
+  (op-minus [ other ^Money money ^RoundingMode rounding-mode]
+    (.minus money other rounding-mode))
+  (op-multiply [ multiplier ^Money money ^RoundingMode rounding-mode]
+    (.multipliedBy money multiplier rounding-mode))
+  (op-divide [multiplier ^Money money ^RoundingMode rounding-mode]
+    (.dividedBy money multiplier rounding-mode))
+  Long
+  (op-multiply [ multiplier ^Money money ^RoundingMode rounding-mode]
+    (.multipliedBy money multiplier))
+  (op-divide [multiplier ^Money money ^RoundingMode rounding-mode]
+    (.dividedBy money multiplier rounding-mode))
+  Money
+  (op-plus [^Money other ^Money money ^RoundingMode rounding-mode]
+    (.plus money other))
+  (op-minus [^Money other ^Money money ^RoundingMode rounding-mode]
+    (.minus money other))
+  Iterable
+  (op-plus [other ^Money money ^RoundingMode rounding-mode]
+    (.plus money other))
+  (op-minus [other ^Money money ^RoundingMode rounding-mode]
+    (.minus money other)))
+
 (defn ^Money plus
   "Adds two monetary amounts together"
   [^Money money other]
-  (.plus money other))
+  (op-plus other money (cnv/to-rounding-mode nil)))
 
 (defn ^Money plus-major
   "Adds two monetary amounts together, taking one of them in
@@ -134,7 +175,7 @@
   "Subtracts one monetary amount from another, taking one of them in
    major units (e.g. dollars)"
   [^Money money other]
-  (.minus money other))
+  (op-minus other money (cnv/to-rounding-mode nil)))
 
 (defn ^Money minus-major
   "Subtracts one monetary amount from another, taking one of them in
@@ -156,9 +197,9 @@
      java.math.RoundingMode constants with the same names
    * nil for no rounding"
   ([^Money money ^double multiplier]
-     (.multipliedBy money multiplier (cnv/to-rounding-mode nil)))
+     (op-multiply multiplier money (cnv/to-rounding-mode nil)))
   ([^Money money ^double multiplier rounding-mode]
-     (.multipliedBy money multiplier (cnv/to-rounding-mode rounding-mode))))
+     (op-multiply multiplier money (cnv/to-rounding-mode rounding-mode))))
 
 (defn ^Money divide
   "Divides monetary amount by the given number. Takes an optional arounding
@@ -168,10 +209,10 @@
    * :floor, :ceiling, :up, :down, :half-up, :half-down, :half-even that correspond to
      java.math.RoundingMode constants with the same names
    * nil for no rounding"
-  ([^Money money ^double multiplier]
-     (.dividedBy money multiplier (cnv/to-rounding-mode nil)))
-  ([^Money money ^double multiplier rounding-mode]
-     (.dividedBy money multiplier (cnv/to-rounding-mode rounding-mode))))
+  ([^Money money multiplier]
+     (op-divide multiplier money (cnv/to-rounding-mode nil)))
+  ([^Money money multiplier rounding-mode]
+     (op-divide multiplier money (cnv/to-rounding-mode rounding-mode))))
 
 (defn ^Money parse
   "Parses a string in the format of [currency code] [amount as double]
