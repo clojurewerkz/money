@@ -142,13 +142,23 @@
         b  10.00M
         c  (ams/of-minor  cu 1300)
         d  0.00M
+        e  (ams/amount-of cu 15.00)
+        f  10.00
+        g  (ams/amount-of cu 15.00)
+        h  (ams/amount-of cu 10.00)
         ^Money t1  (ams/plus a b)
-        ^Money t2  (ams/plus c d)]
+        ^Money t2  (ams/plus c d)
+        ^Money t3  (ams/plus e f)
+        ^Money t4  (ams/plus g h)]
 
     (is (= (.getCurrencyUnit t1) cu))
     (is (= (.getCurrencyUnit t2) cu))
+    (is (= (.getCurrencyUnit t3) cu))
+    (is (= (.getCurrencyUnit t4) cu))
     (is (= 25.00M (.getAmount t1)))
     (is (= 13.00M (.getAmount t2)))
+    (is (= 25.00M (.getAmount t3)))
+    (is (= 25.00M (.getAmount t4)))
     (is (= 38.00M (.getAmount (ams/plus t1 t2))) "add two Money values together")
     (is (= 39.00M (.getAmount (ams/plus t2 [t2 t2]))) "add a collection of Money values")))
 
@@ -184,12 +194,20 @@
         b  10.00M
         c  (ams/of-minor  cu 1300)
         d  0.00M
+        e  (ams/amount-of cu 15.00)
+        f  10.00
+        g  (ams/amount-of cu 15.00)
+        h  (ams/amount-of cu 10.00)
         ^Money t1  (ams/minus a b)
-        ^Money t2  (ams/minus c d)]
+        ^Money t2  (ams/minus c d)
+        ^Money t3  (ams/minus e f)
+        ^Money t4  (ams/minus g h)]
     (is (= (.getCurrencyUnit t1) cu))
     (is (= (.getCurrencyUnit t2) cu))
+    (is (= (.getCurrencyUnit t3) cu))
     (is (= 5.00M  (.getAmount t1)))
     (is (= 13.00M (.getAmount t2)))
+    (is (= 5.00M  (.getAmount t3)))
     (is (= 8.00M (.getAmount (ams/minus t2 t1))) "subtract one Money value from another")
     (is (= 3.00M (.getAmount (ams/minus t2 [t1 t1]))) "subtract multiple Money values from another")))
 
@@ -308,9 +326,19 @@
         ma (ams/multiply oa 10.1 :floor)]
     (is (= ma (ams/amount-of cu/USD 454.50)))))
 
+(deftest test-multiplication-bigdecimal-with-floor-rounding-mode
+  (let [oa (ams/amount-of cu/USD 45)
+        ma (ams/multiply oa 10.1M :floor)]
+    (is (= ma (ams/amount-of cu/USD 454.50)))))
+
 (deftest test-division
   (let [oa (ams/amount-of cu/USD 100)
         ma (ams/divide oa 2)]
+    (is (= ma (ams/amount-of cu/USD 50)))))
+
+(deftest test-division-bigdecimal-with-floor-rounding-mode
+  (let [oa (ams/amount-of cu/USD 100.01)
+        ma (ams/divide oa 2.0M :floor)]
     (is (= ma (ams/amount-of cu/USD 50)))))
 
 (deftest test-division-with-floor-rounding-mode
