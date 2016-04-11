@@ -99,6 +99,11 @@
   []
   (CurrencyUnit/registeredCurrencies))
 
+(defn code-of
+  "Returns the currency code of the given currency"
+  [^CurrencyUnit cu]
+  (when cu
+    (.getCurrencyCode cu)))
 
 (defmacro defalias
   [^String s]
