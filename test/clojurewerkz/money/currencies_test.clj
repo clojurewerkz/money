@@ -32,3 +32,6 @@
 
 (deftest test-additional-currencies-provided-by-clojurewerkz-money
   (is (cu/pseudo-currency? (cu/of "BTC"))))
+
+(deftest test-code-of
+  (is (= "EUR" (cu/code-of cu/EUR))))
