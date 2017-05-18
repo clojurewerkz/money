@@ -1,4 +1,4 @@
-(defproject clojurewerkz/money "1.10.0-SNAPSHOT"
+(defproject clojurewerkz/money "1.10.0"
   :description "A Clojure library that deals with monetary values and currencies. Built on top of Joda Money."
   :min-lein-version "2.5.1"
   :url "http://github.com/clojurewerkz/money"
