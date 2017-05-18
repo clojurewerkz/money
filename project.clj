@@ -1,4 +1,4 @@
-(defproject clojurewerkz/money "1.10.0"
+(defproject clojurewerkz/money "1.11.0-SNAPSHOT"
   :description "A Clojure library that deals with monetary values and currencies. Built on top of Joda Money."
   :min-lein-version "2.5.1"
   :url "http://github.com/clojurewerkz/money"
@@ -12,7 +12,7 @@
                                   [hiccup                 "1.0.3"]]}
              :1.6 {:dependencies [[org.clojure/clojure "1.6.0"]]}
              :1.7 {:dependencies [[org.clojure/clojure "1.7.0"]]}
-             :master {:dependencies [[org.clojure/clojure "1.8.0-master-SNAPSHOT"]]}}
+             :master {:dependencies [[org.clojure/clojure "1.9.0-master-SNAPSHOT"]]}}
   :repositories {"sonatype" {:url "http://oss.sonatype.org/content/repositories/releases"
                              :snapshots false
                              :releases {:checksum :fail :update :always}}
