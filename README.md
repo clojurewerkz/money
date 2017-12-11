@@ -261,7 +261,7 @@ convention described above.
 
 ### Hiccup Integration
 
-`clojurewerkz.money.hiccup`, when loaded, extends [Hiccup]() HTML rendering protocol to render
+`clojurewerkz.money.hiccup`, when loaded, extends [Hiccup](https://github.com/weavejester/hiccup) HTML rendering protocol to render
 monetary amounts and currency units.
 Rendering conventions used are straightforward and
 produce human readable values:
