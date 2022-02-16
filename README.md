@@ -1,7 +1,7 @@
 # ClojureWerkz Money, a Clojure Library to Work With Money
 
 ClojureWerkz Money is a Clojure library that deals with monetary amounts.
-It is built on top of [Joda Money](http://joda-money.sourceforge.net/).
+It is built on top of [Joda Money](https://www.joda.org/joda-money/).
 
 
 ## Project Goals
