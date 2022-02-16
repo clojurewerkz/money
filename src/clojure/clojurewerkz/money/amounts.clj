@@ -68,10 +68,10 @@
   [^Money money]
   (.getAmountMajorLong money))
 
-(defn ^{:tag 'long} minor-of
-  "Returns the amount in minor units as a long"
+(defn ^{:tag 'bigint} minor-of
+  "Returns the amount in minor units as a BigInt"
   [^Money money]
-  (.getAmountMinorLong money))
+  (bigint (.getAmountMinor money)))
 
 (defn ^CurrencyUnit currency-of
   "Returns the currency of a monetary amount"

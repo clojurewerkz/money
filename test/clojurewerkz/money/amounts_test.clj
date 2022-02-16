@@ -54,6 +54,12 @@
        (cu/for-code "VND") 401  401
        CurrencyUnit/JPY    5000 5000))
 
+(deftest test-minor-units-of-exceed-long-limit
+  (let [cu CurrencyUnit/USD
+        amount Long/MAX_VALUE
+        ^Money money (ams/of-major cu amount)]
+    (is (= (ams/currency-of money) cu))
+    (is (= (* (bigint 100) amount) (ams/minor-of money)))))
 
 (deftest test-zero-amount
   (are [cu bdec] (let [^Money money (ams/zero cu)]
