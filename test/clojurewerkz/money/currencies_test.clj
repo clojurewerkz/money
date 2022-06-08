@@ -23,8 +23,8 @@
 (deftest test-currency-countries
   (are [code unit] (is (= unit (cu/of-country code) (cu/for-country code)))
     "CH" cu/CHF
-    "RU" cu/RUB
-    "LV" cu/LVL))
+    "BE" cu/EUR
+    "CA" cu/CAD))
 
 (deftest test-pseudo-currency
   (is (cu/pseudo-currency? (cu/of "XXX")))
