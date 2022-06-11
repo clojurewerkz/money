@@ -43,7 +43,7 @@
 ;; Implementation
 ;;
 
-(defn ^:private new-builder
+(defn new-builder
   []
   (MoneyFormatterBuilder.))
 
