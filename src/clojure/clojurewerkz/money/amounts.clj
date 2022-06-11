@@ -33,7 +33,7 @@
 
 (ns clojurewerkz.money.amounts
   "Operations on monetary amounts, including conversion, parsing, and predicates"
-  (:refer-clojure :exclude [zero? max min > >= < <=])
+  (:refer-clojure :exclude [zero? max min > >= < <= abs])
   (:require [clojurewerkz.money.conversion :as cnv])
   (:import [org.joda.money Money BigMoney CurrencyUnit MoneyUtils]
            [java.math RoundingMode]))
