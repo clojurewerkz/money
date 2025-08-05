@@ -1,6 +1,24 @@
+## Changes Between 1.11.0 and 1.12.0
+
+### Fix to a `java.lang.IllegalArgumentException`
+
+`clojurewerkz.money.amounts/minor-of` failed with
+
+```
+java.lang.IllegalArgumentException: Unable to resolve classname: bigint
+```
+
+due to an incorrect type hint.
+
+Contributed by @rap1ds.
+
+GitHub issues: [#34](https://github.com/clojurewerkz/money/issues/34), [#35](https://github.com/clojurewerkz/money/pull/35).
+
+
+
 ## Changes Between 1.10.0 and 1.11.0
 
-No changes yet.
+Dependency updates.
 
 
 ## Changes Between 1.9.0 and 1.10.0
